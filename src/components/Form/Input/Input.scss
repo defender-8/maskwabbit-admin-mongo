@@ -1,0 +1,32 @@
+@import "../../../assets/scss/fonts";
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+@mixin input {
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.ant-input {
+  @include input;
+}
+
+.ant-input-password {
+  @include input;
+}
+
+div.ant-input-number {
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 8px;
+
+  .ant-input-number-handler-wrap {
+    border-radius: 0 8px 8px 0;
+  }
+}
+
+// with allowClear
+.ant-input-affix-wrapper {
+  @include input;
+}

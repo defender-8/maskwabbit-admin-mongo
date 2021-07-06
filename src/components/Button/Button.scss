@@ -1,0 +1,54 @@
+@import "../../assets/scss/fonts";
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.ant-btn {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 7px 32px;
+  border-radius: 8px;
+  transition: background-color .3s ease-in-out;
+  height: unset;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &.ant-btn-primary {
+    background-color: $secondary;
+    border-color: $secondary;
+
+    &:hover, &:focus {
+      background-color: lighten($secondary, 5%);
+      border-color: lighten($secondary, 5%);
+    }
+  }
+
+  &.ant-btn-link {
+    text-transform: none;
+
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  &.ant-btn-dangerous {
+    background-color: $danger;
+    border-color: $danger;
+
+    &:hover, &:focus {
+      background-color: darken($danger, 5%);
+      border-color: darken($danger, 5%);
+    }
+  }
+
+  &.btn-success {
+    background-color: $success;
+    border-color: $success;
+
+    &:hover, &:focus {
+      background-color: darken($success, 7%);
+      border-color: darken($success, 7%);
+    }
+  }
+}

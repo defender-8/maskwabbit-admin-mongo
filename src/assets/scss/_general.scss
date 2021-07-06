@@ -1,0 +1,56 @@
+@import "./fonts";
+@import "./variables";
+@import "./mixins";
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-size: 16px;
+  font-family: "SF Pro Rounded", "Balsamiq Sans", sans-serif;
+  color: $primary;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+a {
+  color: $secondary;
+
+  &:hover, &:focus {
+    text-decoration: none;
+    color: $secondary;
+  }
+}
+
+img {
+  &.imgResponsive {
+    width: 100%;
+    height: auto;
+  }
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h3 {
+  &.h3-text {
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &.ul-text {
+    list-style: disc;
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
+}

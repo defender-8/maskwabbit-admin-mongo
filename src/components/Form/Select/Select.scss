@@ -1,0 +1,27 @@
+@import "../../../assets/scss/fonts";
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+// select
+
+// dropdown
+.ant-select-dropdown {
+  .ant-select-item-option-selected {
+    &:not(.ant-select-item-option-disabled) {
+      color: $white;
+      background-color: $secondary;
+    }
+  }
+}
+
+// custom to redefine
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: 42px;
+  border-radius: 8px;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector::after,
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item,
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
+  line-height: 40px;
+}

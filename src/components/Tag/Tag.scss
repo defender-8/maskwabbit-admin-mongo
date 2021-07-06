@@ -1,0 +1,15 @@
+@import "../../assets/scss/fonts";
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.ant-tag {
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 4px 10px;
+}
+
+.ant-table tr.cursor-pointer {
+  .ant-tag {
+    cursor: pointer;
+  }
+}

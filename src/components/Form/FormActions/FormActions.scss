@@ -1,0 +1,15 @@
+@import "../../../assets/scss/fonts";
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.FormActions {
+  margin-bottom: 16px;
+  padding: 0 16px;
+
+  &.FormActions-p-abs {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+  }
+}

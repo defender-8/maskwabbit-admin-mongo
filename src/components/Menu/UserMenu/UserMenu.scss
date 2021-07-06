@@ -1,0 +1,30 @@
+@import "../../../assets/scss/fonts";
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.UserMenu {
+  @include shadowOut;
+  border: none;
+
+  .ant-menu-item {
+    a {
+      &:hover {
+        color: $secondary;
+      }
+    }
+
+    &.ant-menu-item-selected {
+      a {
+        color: $secondary;
+      }
+    }
+  }
+
+  &.ant-dropdown-menu {
+    .ant-dropdown-menu-item {
+      .anticon {
+        font-size: 15px;
+      }
+    }
+  }
+}
