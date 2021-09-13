@@ -1,0 +1,57 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+div.ant-tabs {
+  padding-left: 32px;
+  padding-right: 32px;
+  overflow: unset;
+
+  @media (max-width: 575px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  &.ant-tabs-card {
+    .ant-tabs-nav {
+      &:before {
+        display: none;
+      }
+
+      .ant-tabs-nav-list {
+        margin-bottom: 16px;
+
+        .ant-tabs-tab {
+          padding: 4px 10px;
+          background-color: @white;
+          border: none;
+          border-radius: 8px;
+          font-size: 16px;
+          color: @textColor;
+
+          &:hover, &:focus {
+            color: @textDark;
+          }
+
+          &:not(:last-child) {
+            margin-right: 24px;
+          }
+
+          &.ant-tabs-tab-active {
+            background-color: @bgGrey;
+
+            .ant-tabs-tab-btn {
+              color: @textDark;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ant-tabs-dropdown {
+  .ant-tabs-dropdown-menu {
+    #scrollbarCustom();
+  }
+}

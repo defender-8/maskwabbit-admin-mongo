@@ -6,7 +6,7 @@ import authReducer from './auth/auth-reducer';
 import adminReducer from './admin/admin-reducer';
 import clientReducer from './client/client-reducer';
 import productReducer from './product/product-reducer';
-import prodCatReducer from './product-category/product-category-reducer';
+import categoryReducer from './category/category-reducer';
 import orderReducer from './order/order-reducer';
 
 const persistConfig = {
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   admin: adminReducer,
   client: clientReducer,
   product: productReducer,
-  prodCat: prodCatReducer,
+  category: categoryReducer,
   order: orderReducer,
 });
 

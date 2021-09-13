@@ -1,0 +1,20 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+div.ant-table {
+  font-size: 16px;
+
+  .ant-table-thead {
+    .ant-table-cell {
+      font-weight: 600;
+    }
+  }
+}
+
+div.ant-table-filter-dropdown {
+  .ant-dropdown-menu-item {
+    &.ant-dropdown-menu-item-selected {
+      background-color: rgba(@primary, 15%);
+    }
+  }
+}

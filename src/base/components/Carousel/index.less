@@ -1,0 +1,85 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+.slick-slider {
+  &.sl-images {
+    .slick-list {
+      .slick-slide {
+        position: relative;
+        @media (min-width: 769px) {
+          min-height: 456px;
+          position: relative;
+        }
+
+        > div {
+          @media (min-width: 769px) {
+            min-height: 456px;
+          }
+
+          > div {
+            @media (min-width: 769px) {
+              min-height: 456px;
+              display: flex !important;
+              flex-flow: column;
+              justify-content: center;
+              align-items: center;
+
+            }
+
+            img {
+              max-width: 100% !important;
+              @media (min-width: 769px) {
+                max-height: 456px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .slick-dots {
+      bottom: -72px;
+
+      li {
+        width: 66px;
+        height: 56px;
+        padding: 2px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+
+        &.slick-active {
+          border-color: @primary;
+        }
+
+        a {
+          display: inline-block;
+          height: 100%;
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+
+  .slick-arrow {
+    display: flex;
+    align-content: center;
+
+    &:before {
+      display: none;
+    }
+
+    &.slick-prev {
+      justify-content: flex-end;
+    }
+
+    .slick-arrow-icon {
+      width: 8px;
+    }
+  }
+}

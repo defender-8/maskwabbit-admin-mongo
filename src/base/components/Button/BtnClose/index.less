@@ -1,0 +1,22 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+.BtnClose {
+  .posCenter();
+  width: 24px;
+  height: 24px;
+  background-color: @dangerBg;
+  border-radius: 50%;
+  .BtnClose-icon {
+    .posCenter();
+
+    svg {
+      width: 10px;
+      height: 10px;
+
+      .g-filled {
+        stroke: @danger;
+      }
+    }
+  }
+}

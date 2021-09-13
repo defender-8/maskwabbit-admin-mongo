@@ -1,0 +1,22 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+.Badge {
+  display: inline-block;
+  border: solid 1px @bgGrey;
+  background-color: @bgGrey;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 14px;
+  line-height: 1;
+  color: @textColor;
+
+  &.Badge-bordered {
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    background-color: @white;
+  }
+
+  &.Badge-square {
+    padding: 4px 8px;
+  }
+}

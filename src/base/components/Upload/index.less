@@ -1,0 +1,72 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+div.ant-upload {
+  &.ant-upload-drag {
+    border-radius: 8px;
+    border-color: transparent;
+    background-color: @bgGrey;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+      background-color: rgba(111, 207, 104, 0.1);
+    }
+
+    .ant-upload-btn {
+      .ant-upload-drag-container {
+        line-height: 1.14;
+        color: @textColor;
+      }
+    }
+
+    &.h-80 {
+      padding: 8px 0;
+    }
+  }
+}
+
+div.ant-upload-list {
+  margin-top: 24px;
+  .ant-upload-list-text-container {
+    .ant-upload-list-item {
+      margin-top: 0;
+      margin-bottom: 32px;
+
+      &:hover {
+        .ant-upload-list-item-info {
+          background-color: transparent;
+        }
+      }
+
+      .ant-upload-text-icon {
+        transform: translateX(-12px);
+        img {
+          width: 52px;
+        }
+      }
+
+      .ant-upload-list-item-name {
+        pointer-events: none;
+        color: @textColor;
+        padding-right: 24px;
+        transform: translateX(-16px);
+      }
+
+      .ant-upload-list-item-card-actions {
+        position: relative;
+        .ant-btn {
+          .posCenterY();
+          right: -4px;
+          padding: 0;
+          border: none;
+        }
+      }
+    }
+
+    &:last-child {
+      .ant-upload-list-item {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}

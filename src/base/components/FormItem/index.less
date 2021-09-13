@@ -1,0 +1,54 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+div.ant-form-item {
+  margin-bottom: 20px;
+
+  .ant-form-item-label {
+    padding-bottom: 6px;
+    line-height: 1.14;
+
+    label {
+      color: @textColor;
+      position: relative;
+
+      &:before {
+        position: absolute;
+        right: -12px;
+        font-size: 16px !important;
+        color: @primary !important;
+      }
+    }
+  }
+
+  &.ant-form-item-has-error {
+    margin-bottom: 10px;
+
+    .ant-form-item-explain {
+      &.ant-form-item-explain-error {
+        text-align: left;
+      }
+    }
+  }
+
+  &.label-wide {
+    position: relative;
+
+    .ant-form-item-label {
+      position: absolute;
+      top: -20px;
+      min-width: 320px;
+    }
+  }
+}
+
+.form-item-wrapper {
+  position: relative;
+
+  .form-item-label-right {
+    position: absolute;
+    top: -4px;
+    right: 0;
+    z-index: 1;
+  }
+}

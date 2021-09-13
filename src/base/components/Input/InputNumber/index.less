@@ -1,0 +1,21 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+div.ant-input-number {
+  border-radius: 8px;
+  background-color: @bgGrey;
+  border: 1px solid @bgGrey;
+  width: 100%;
+
+  &:hover {
+    border-color: @secondary;
+  }
+
+  &:focus, &.ant-input-number-focused {
+    .inputFocus();
+  }
+
+  .ant-input-number-input {
+    height: 37px;
+  }
+}

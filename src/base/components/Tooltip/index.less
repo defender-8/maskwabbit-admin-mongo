@@ -1,0 +1,23 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+div.ant-tooltip {
+  max-width: 296px;
+
+  .ant-tooltip-arrow {
+    .ant-tooltip-arrow-content {
+      background-color: @white;
+    }
+  }
+
+  .ant-tooltip-content {
+    .ant-tooltip-inner {
+      padding: 16px;
+      border-radius: 8px;
+      background-color: @white;
+      .shadowOut();
+      color: @textColor;
+      line-height: 1.14;
+    }
+  }
+}

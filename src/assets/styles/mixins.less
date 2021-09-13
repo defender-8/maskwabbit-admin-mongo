@@ -1,0 +1,106 @@
+@import "variables";
+
+// Border
+.bordered {
+  border: 2px solid rgba(0, 0, 0, .05);
+}
+
+// Display
+.displayTable {
+  display: table;
+  width: 100%;
+}
+
+.displayTableRow {
+  display: table-row;
+  width: 100%;
+  clear: both;
+}
+
+.displayTableCol {
+  float: left; /* fix for  buggy browsers */
+  display: table-column;
+}
+
+// Images
+.imgResponsive {
+  width: 100%;
+  height: auto;
+}
+
+// Input
+.input {
+  border-radius: 8px;
+  border-color: @bgGrey;
+  padding: 6px 16px;
+  background-color: @bgGrey;
+  font-size: 16px;
+  color: @textDark;
+}
+
+.inputFocus {
+  background-color: transparent;
+  box-shadow: none;
+  border-color: @primary;
+}
+
+// Position
+.posCenter {
+  position: absolute !important;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.posCenterX {
+  position: absolute !important;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.posCenterY {
+  position: absolute !important;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// Scrollbar
+#scrollbarCustom() {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(139, 148, 168, 0.34);
+    border-radius: 4px;
+  }
+}
+
+// Shadow
+.shadowOut {
+  box-shadow: 0 0 16px 2px rgba(230, 230, 240, 0.8);
+}
+
+// Shapes
+.triangleDown(@color) {
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 8px solid @color;
+}
+
+.triangleLeft(@color) {
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right:8px solid @color;
+}
+
+// Spacing
+.mAuto {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

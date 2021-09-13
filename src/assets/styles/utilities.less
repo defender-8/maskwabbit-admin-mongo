@@ -1,0 +1,470 @@
+@import "variables";
+@import "mixins";
+
+// Backgrounds
+.bg-transparent {
+  background-color: transparent !important;
+
+  * {
+    background-color: transparent !important;
+  }
+}
+
+// Borders
+.border-top {
+  border-top: @border;
+}
+
+// Colors
+.color-primary {
+  color: @primary !important;
+}
+
+.color-text {
+  color: @textColor !important;
+}
+
+.color-text-dark {
+  color: @textDark !important;
+}
+
+.color-text-grey {
+  color: @textGrey !important;
+}
+
+.color-white {
+  color: @white !important;
+}
+
+.color-black {
+  color: @black !important;
+}
+
+.color-info {
+  color: @info !important;
+}
+
+.color-success {
+  color: @success !important;
+}
+
+.color-warning {
+  color: @warning !important;
+}
+
+.color-danger {
+  color: @danger !important;
+}
+
+// Cursor
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+
+  * {
+    cursor: not-allowed !important;
+  }
+}
+
+// Display
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.inline-blocks-wr {
+  > * {
+    display: inline-block !important;
+  }
+}
+
+.d-table {
+  .displayTable();
+}
+
+.d-table-row {
+  .displayTableRow();
+}
+
+.d-table-col {
+  .displayTableCol();
+}
+
+// Events
+
+.pe-none {
+  pointer-events: none;
+}
+
+.pe-visible {
+  pointer-events: visible;
+}
+
+// Flex
+.d-flex {
+  display: flex !important;
+}
+
+.d-flex-column {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.d-flex-space-between {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+// Float
+.float-l {
+  float: left;
+}
+
+.float-r {
+  float: right;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+// Images
+.img-responsive {
+  .imgResponsive();
+}
+
+// Overflow
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+// Position
+.pos-static {
+  position: static !important;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.pos-absolute {
+  position: absolute;
+}
+
+.pos-center {
+  .posCenter();
+}
+
+.pos-center-x {
+  .posCenterX();
+}
+
+.pos-center-y {
+  .posCenterY();
+}
+
+
+// - Radius
+.circled {
+  border-radius: 50% !important;
+}
+
+.rounded {
+  border-radius: 8px;
+}
+
+// Shadows
+.shadow-out {
+  .shadowOut();
+}
+
+// Spacing
+.m-auto {
+  .mAuto();
+}
+
+.my-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-05 {
+  margin-bottom: 4px;
+}
+
+.mr-05 {
+  margin-right: 4px;
+}
+
+.mt-loop(@stepNum);
+.mt-loop(@n, @i: 1) when (@i =< @n) {
+  .mt-@{i} {
+    margin-top: @i * @step !important;
+  }
+  .mt-loop(@n, (@i + 1));
+}
+
+.mr-loop(@stepNum);
+.mr-loop(@n, @i: 1) when (@i =< @n) {
+  .mr-@{i} {
+    margin-right: @i * @step !important;
+  }
+  .mr-loop(@n, (@i + 1));
+}
+
+.mb-loop(@stepNum);
+.mb-loop(@n, @i: 1) when (@i =< @n) {
+  .mb-@{i} {
+    margin-bottom: @i * @step !important;
+  }
+  .mb-loop(@n, (@i + 1));
+}
+
+.ml-loop(@stepNum);
+.ml-loop(@n, @i: 1) when (@i =< @n) {
+  .ml-@{i} {
+    margin-left: @i * @step !important;
+  }
+  .ml-loop(@n, (@i + 1));
+}
+
+.mx-loop(@stepNum);
+.mx-loop(@n, @i: 1) when (@i =< @n) {
+  .mx-@{i} {
+    margin-left: @i * @step !important;
+    margin-right: @i * @step !important;
+  }
+  .mx-loop(@n, (@i + 1));
+}
+
+.my-loop(@stepNum);
+.my-loop(@n, @i: 1) when (@i =< @n) {
+  .my-@{i} {
+    margin-top: @i * @step !important;
+    margin-bottom: @i * @step !important;
+  }
+  .my-loop(@n, (@i + 1));
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.pt-loop(@stepNum);
+.pt-loop(@n, @i: 1) when (@i =< @n) {
+  .pt-@{i} {
+    padding-top: @i * @step !important;
+  }
+  .pt-loop(@n, (@i + 1));
+}
+
+.pr-loop(@stepNum);
+.pr-loop(@n, @i: 1) when (@i =< @n) {
+  .pr-@{i} {
+    padding-right: @i * @step !important;
+  }
+  .pr-loop(@n, (@i + 1));
+}
+
+.pb-loop(@stepNum);
+.pb-loop(@n, @i: 1) when (@i =< @n) {
+  .pb-@{i} {
+    padding-bottom: @i * @step !important;
+  }
+  .pb-loop(@n, (@i + 1));
+}
+
+.pl-loop(@stepNum);
+.pl-loop(@n, @i: 1) when (@i =< @n) {
+  .pl-@{i} {
+    padding-left: @i * @step !important;
+  }
+  .pl-loop(@n, (@i + 1));
+}
+
+.px-loop(@stepNum);
+.px-loop(@n, @i: 1) when (@i =< @n) {
+  .px-@{i} {
+    padding-left: @i * @step !important;
+    padding-right: @i * @step !important;
+  }
+  .px-loop(@n, (@i + 1));
+}
+
+.py-loop(@stepNum);
+.py-loop(@n, @i: 1) when (@i =< @n) {
+  .py-@{i} {
+    padding-top: @i * @step !important;
+    padding-bottom: @i * @step !important;
+  }
+  .py-loop(@n, (@i + 1));
+}
+
+// Sizing
+
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+// Text
+.fs-05 {
+  font-size: .5rem !important;
+}
+
+.fs-0675 {
+  font-size: .675rem !important;
+}
+
+.fs-075 {
+  font-size: .75rem !important;
+}
+
+.fs-0875 {
+  font-size: .875rem !important;
+}
+
+.fs-1 {
+  font-size: 1rem !important;
+}
+
+.fs-1125 {
+  font-size: 1.125rem !important;
+}
+
+.fs-125 {
+  font-size: 1.25rem !important;
+}
+
+.fs-15 {
+  font-size: 1.5rem !important;
+}
+
+.fs-175 {
+  font-size: 1.75rem !important;
+}
+
+.fs-2 {
+  font-size: 2rem !important;
+}
+
+.fw-300 {
+  font-weight: 300 !important;
+}
+
+.fw-400 {
+  font-weight: 400 !important;
+}
+
+.fw-600 {
+  font-weight: 600 !important;
+}
+
+.fw-700 {
+  font-weight: 700 !important;
+}
+
+.f-st-italic {
+  font-style: italic;
+}
+
+.lh-normal {
+  line-height: normal;
+}
+
+.lh-1 {
+  line-height: 1;
+}
+
+.lh-114 {
+  line-height: 1.14;
+}
+
+.lh-133 {
+  line-height: 1.33;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-upp {
+  text-transform: uppercase;
+}
+
+.text-low {
+  text-transform: lowercase;
+}
+
+.text-cap {
+  text-transform: capitalize;
+}
+
+.text-link {
+  cursor: pointer;
+  color: @linkColor !important;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+// Vertical align
+
+.va-middle {
+  vertical-align: middle !important;
+}
+
+.va-top {
+  vertical-align: top !important;
+}
+
+// White-space
+
+.ws-nowrap {
+  white-space: nowrap;
+}
+
+.ws-normal {
+  white-space: normal;
+}

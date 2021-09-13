@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 const selectAuth = state => state.auth;
 
-export const selectCurrentUser = createSelector(
+export const selectUser = createSelector(
   [selectAuth],
-  auth => auth.currentUser,
+  auth => auth.user,
 );
 
 export const selectUserToResetPassId = createSelector(

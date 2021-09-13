@@ -1,7 +1,7 @@
 import authActionTypes from './auth-action-types';
 
 const initialState = {
-  currentUser: null,
+  user: null,
   userToResetPassId: null,
   successMessage: null,
   errorMessage: null,
@@ -20,12 +20,12 @@ function authReducer(state = initialState, action) {
     case authActionTypes.SIGN_IN:
       return {
         ...state,
-        currentUser: payload,
+        user: payload,
       };
     case authActionTypes.LOG_OUT:
       return {
         ...state,
-        currentUser: payload,
+        user: payload,
       };
     case authActionTypes.POST_RESET_PASSWORD:
       return {

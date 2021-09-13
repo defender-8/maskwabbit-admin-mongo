@@ -1,0 +1,24 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+.ant-input-affix-wrapper.ant-input-password {
+  .input();
+
+  &:hover {
+    border-color: @secondary;
+  }
+
+  &.ant-input-affix-wrapper-focused {
+    .inputFocus();
+  }
+}
+
+.ant-form-item-has-error {
+  .ant-input-affix-wrapper.ant-input-password {
+    &.ant-input-affix-wrapper-focused {
+      .ant-input {
+        box-shadow: none !important;
+      }
+    }
+  }
+}

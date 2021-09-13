@@ -1,0 +1,25 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+input.ant-input {
+  .input();
+
+  &:hover {
+    border-color: @primary;
+  }
+
+  &:focus {
+    .inputFocus();
+  }
+}
+
+// with suffix
+span.ant-input-affix-wrapper {
+  &:focus, &.ant-input-affix-wrapper-focused {
+    .inputFocus();
+
+    .ant-input {
+      background-color: transparent;
+    }
+  }
+}

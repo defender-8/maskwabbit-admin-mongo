@@ -1,0 +1,42 @@
+@import "variables";
+@import "mixins";
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: @mainFont;
+  font-size: 14px;
+  color: @textColor;
+  line-height: 1.14;
+}
+
+a {
+  color: @primary;
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
+h1 {
+  font-size: 28px;
+}
+
+
+p {
+  margin-bottom: 16px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &.ul-text {
+    list-style: disc;
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
+}

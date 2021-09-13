@@ -1,0 +1,38 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+label.ant-radio-button-wrapper {
+  &.radio-img {
+    border: none;
+    color: @textColor;
+    padding: 0;
+
+    &:before {
+      display: none;
+    }
+
+    &:hover {
+      color: @textColor;
+    }
+
+    .radio-img-wrapper {
+      border-radius: 8px;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+
+      .radio-img-text {
+        line-height: 1;
+      }
+    }
+
+    &.ant-radio-button-wrapper-checked {
+      box-shadow: none;
+
+      .radio-img-wrapper {
+        background-color: @bgGrey;
+      }
+    }
+  }
+}

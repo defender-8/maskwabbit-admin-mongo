@@ -1,0 +1,17 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+.BtnTab {
+  display: inline-block;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 8px;
+
+  &.active {
+    background-color: @bgGrey;
+    color: @textDark;
+    font-weight: 600;
+  }
+}

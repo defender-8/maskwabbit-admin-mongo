@@ -1,0 +1,36 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+.UploadImage {
+  position: relative;
+  margin-bottom: 8px;
+
+  .UploadImage-img-wr {
+    width: 144px;
+    height: 144px;
+    background-color: rgba(243, 243, 244, 0.9);
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+
+    .UploadImage-img {
+      width: 144px;
+      height: 144px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .UploadImage-empty-icon {
+      .posCenter();
+    }
+  }
+
+  .UploadImage-action {
+    cursor: pointer;
+    text-align: right;
+    color: @danger;
+    margin-top: 4px;
+    position: absolute;
+    right: 0;
+  }
+}

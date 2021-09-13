@@ -1,0 +1,29 @@
+@import "../../../../../assets/styles/variables";
+@import "../../../../../assets/styles/mixins";
+
+.UserMenu {
+  .shadowOut();
+  border: none;
+
+  .ant-menu-item {
+    a {
+      &:hover {
+        color: @secondary;
+      }
+    }
+
+    &.ant-menu-item-selected {
+      a {
+        color: @secondary;
+      }
+    }
+  }
+
+  &.ant-dropdown-menu {
+    .ant-dropdown-menu-item {
+      .anticon {
+        font-size: 15px;
+      }
+    }
+  }
+}

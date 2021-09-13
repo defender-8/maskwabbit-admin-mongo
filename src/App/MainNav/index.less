@@ -1,0 +1,28 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.ant-menu.MainNav {
+  background: lighten(@primary, 3%) !important;
+
+  .ant-menu-item {
+    &.ant-menu-item-selected {
+      background-color: @secondary !important;
+    }
+
+    .ant-menu-title-content {
+      a {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .ant-menu-submenu {
+    .ant-menu-submenu-title {
+      .ant-menu-title-content {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+}
