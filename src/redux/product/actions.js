@@ -1,9 +1,9 @@
 import axios from 'axios';
+import qs from 'qs';
 
-import productActionTypes from './product-action-types';
+import actionTypes from './action-types';
 
-// GET
-export const getArr = (endpoint, token) => {
+export const get = (queryParams, token) => {
   const config = {
     headers: {
       'Authorization': 'Bearer ' + token,
@@ -12,16 +12,16 @@ export const getArr = (endpoint, token) => {
 
   return async dispatch => {
     dispatch({
-      type: productActionTypes.RESET_PRODUCT_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
     dispatch({
-      type: productActionTypes.RESET_PRODUCTS,
+      type: actionTypes.RESET_ARRAY,
     });
     try {
-      const res = await axios.get(endpoint, config);
+      const res = await axios.get(`/dashboard/products/?${qs.stringify(queryParams)}`, config);
       const data = res.data;
       dispatch({
-        type: productActionTypes.GET_PRODUCTS,
+        type: actionTypes.GET,
         payload: data,
       });
     } catch (err) {
@@ -34,14 +34,14 @@ export const getArr = (endpoint, token) => {
       }
 
       dispatch({
-        type: productActionTypes.GET_PRODUCT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
 
-export const getOne = (id, token) => {
+export const getById = (id, token) => {
   const endpoint = `/dashboard/products/${id}`;
 
   const config = {
@@ -51,17 +51,17 @@ export const getOne = (id, token) => {
   };
   return async dispatch => {
     dispatch({
-      type: productActionTypes.RESET_PRODUCT_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
     dispatch({
-      type: productActionTypes.RESET_PRODUCT,
+      type: actionTypes.RESET_SINGLE,
     });
     try {
       const res = await axios.get(endpoint, config);
       const data = res.data;
       dispatch({
-        type: productActionTypes.GET_PRODUCT,
-        payload: data.product,
+        type: actionTypes.GET_BY_ID,
+        payload: data.dataSingle,
       });
     } catch (err) {
       let payload;
@@ -73,14 +73,12 @@ export const getOne = (id, token) => {
       }
 
       dispatch({
-        type: productActionTypes.GET_PRODUCT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
-
-// POST
 
 export const post = (formData, token) => {
   const endpoint = '/dashboard/products/new';
@@ -94,14 +92,14 @@ export const post = (formData, token) => {
 
   return async dispatch => {
     dispatch({
-      type: productActionTypes.RESET_PRODUCT_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
 
     try {
       const res = await axios.post(endpoint, formData, config);
       const data = res.data;
       dispatch({
-        type: productActionTypes.POST_PRODUCT,
+        type: actionTypes.POST,
         payload: data.message,
       });
     } catch (err) {
@@ -114,14 +112,12 @@ export const post = (formData, token) => {
       }
 
       dispatch({
-        type: productActionTypes.GET_PRODUCT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
-
-// PUT
 
 export const put = (id, formData, token) => {
   const endpoint = `/dashboard/products/${id}`;
@@ -135,14 +131,14 @@ export const put = (id, formData, token) => {
 
   return async dispatch => {
     dispatch({
-      type: productActionTypes.RESET_PRODUCT_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
 
     try {
       const res = await axios.put(endpoint, formData, config);
       const data = res.data;
       dispatch({
-        type: productActionTypes.PUT_PRODUCT,
+        type: actionTypes.PUT,
         payload: data,
       });
     } catch (err) {
@@ -155,16 +151,14 @@ export const put = (id, formData, token) => {
       }
 
       dispatch({
-        type: productActionTypes.GET_PRODUCT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
 
-// DELETE
-
-export const delOne = (id, token) => {
+export const remove = (id, token) => {
   const endpoint = `/dashboard/products/${id}`;
 
   const config = {
@@ -175,14 +169,14 @@ export const delOne = (id, token) => {
 
   return async dispatch => {
     dispatch({
-      type: productActionTypes.RESET_PRODUCT_MESSAGE_ONLY,
+      type: actionTypes.RESET_MESSAGE_ONLY,
     });
 
     try {
       const res = await axios.delete(endpoint, config);
       const data = res.data;
       dispatch({
-        type: productActionTypes.DELETE_PRODUCT,
+        type: actionTypes.DELETE,
         payload: data.message,
       });
     } catch (err) {
@@ -195,7 +189,7 @@ export const delOne = (id, token) => {
       }
 
       dispatch({
-        type: productActionTypes.GET_PRODUCT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }

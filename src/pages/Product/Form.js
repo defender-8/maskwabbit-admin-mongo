@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getOne, post, put, delOne } from '../../redux/product/product-actions';
+import { getById, post, put, remove } from '../../redux/product/actions';
 
 import { beforeImageUpload } from '../../utils/file';
 
@@ -15,10 +15,7 @@ function ProductForm({ match, history }) {
   const { params: { id }, url } = match;
 
   const { user } = useSelector(state => state.auth);
-  const isLoading = useSelector(state => state.product.isLoading);
-  const errorMessage = useSelector(state => state.product.errorMessage);
-  const successMessage = useSelector(state => state.product.successMessage);
-  const { product } = useSelector(state => state.product);
+  const { loading, errorMessage, successMessage, dataSingle } = useSelector(state => state.product);
 
   const dispatch = useDispatch();
 
@@ -33,13 +30,13 @@ function ProductForm({ match, history }) {
 
   useEffect(() => {
     if (id) {
-      dispatch(getOne(id, user.token));
+      dispatch(getById(id, user.token));
     }
   }, [id]);
 
   const setFormFieldsValueFromProps = () => {
-    if (product) {
-      const { title, image, price, amount, categories } = product;
+    if (dataSingle) {
+      const { title, image, price, amount, categories } = dataSingle;
 
       form.setFieldsValue({
         title,
@@ -55,7 +52,7 @@ function ProductForm({ match, history }) {
 
   useEffect(() => {
     setFormFieldsValueFromProps();
-  }, [product]);
+  }, [dataSingle]);
 
   useEffect(() => {
     if (successMessage) {
@@ -109,7 +106,7 @@ function ProductForm({ match, history }) {
   };
 
   const deleteItem = async () => {
-    await dispatch(delOne(id, user.token));
+    await dispatch(remove(id, user.token));
     history.replace(url.substring(0, url.indexOf(`/${id}`)));
   };
 
@@ -137,7 +134,7 @@ function ProductForm({ match, history }) {
           /> : null
       }
       {
-        (isLoading && !isSpinHidden && !errorMessage) ?
+        (loading && !isSpinHidden && !errorMessage) ?
           <Spin /> : (
             <Form
               form={form}
@@ -147,8 +144,8 @@ function ProductForm({ match, history }) {
               <FormActions
                 deleteItem={deleteItem}
                 isItemNew={!id}
-                saveLoading={saveLoading ? isLoading : false}
-                delLoading={delLoading ? isLoading : false}
+                saveLoading={saveLoading ? loading : false}
+                delLoading={delLoading ? loading : false}
                 turnOnSaveLoading={turnOnSaveLoading}
                 turnOnDelLoading={turnOnDelLoading}
               />

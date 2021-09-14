@@ -1,0 +1,14 @@
+const actionTypes = {
+  RESET_MESSAGE: 'RESET_MESSAGE',
+  RESET_MESSAGE_ONLY: 'RESET_MESSAGE_ONLY',
+  RESET_ARRAY: 'RESET_ARRAY',
+  RESET_SINGLE: 'RESET_SINGLE',
+  GET: 'GET',
+  GET_BY_ID: 'GET_BY_ID',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+  GET_ERROR: 'GET_ERROR',
+};
+
+export default actionTypes;

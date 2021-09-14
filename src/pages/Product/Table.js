@@ -5,9 +5,8 @@ import {
   EditFilled,
 } from '@ant-design/icons';
 import moment from 'moment';
-import qs from 'qs';
 
-import { getArr, delOne } from '../../redux/product/product-actions';
+import { get, remove } from '../../redux/product/actions';
 import { getArr as getCategories } from '../../redux/category/category-actions';
 
 import { stopPropagation } from '../../base/utils/event';
@@ -17,13 +16,9 @@ import { Spin, Table, Pagination, Avatar, Tag } from '../../base/components';
 import { ArrayHeader, DeleteItem } from '../../components';
 
 function ProductTable({ history, match }) {
-  const user = useSelector(state => state.auth.user);
-
-  const isLoading = useSelector(state => state.product.isLoading);
-  const errorMessage = useSelector(state => state.product.errorMessage);
-  const dataArr = useSelector(state => state.product.products);
-  const total = useSelector(state => state.product.total);
-  const categories = useSelector(state => state.category.categories);
+  const { user: { token } } = useSelector(state => state.auth);
+  const { categories } = useSelector(state => state.category);
+  const { loading, errorMessage, dataArray, total } = useSelector(state => state.product);
 
   const dispatch = useDispatch();
 
@@ -31,7 +26,7 @@ function ProductTable({ history, match }) {
     currentPage: 1,
     pageSize: 10,
   });
-  const [searchValue, setSearchValue] = useState('');
+  const [search, setSearch] = useState('');
   const [sorter, setSorter] = useState({ createdAt: 'desc' });
   const [filters, setFilters] = useState(null);
 
@@ -101,14 +96,22 @@ function ProductTable({ history, match }) {
     },
   ];
 
-  const stateQueryStr = qs.stringify({
-    page,
-    sorter,
-    filters,
-    search: searchValue,
-  });
-  // const userRoleQueryStr = `&role=${userRole || null}`;
-  const urlQueryStr = stateQueryStr/* + userRoleQueryStr*/;
+  const queryParams = { page, sorter, filters, search }
+
+  useEffect(() => {
+    dispatch(get(queryParams, token));
+    dispatch(getCategories(`/dashboard/categories`, token));
+  }, [page, sorter, filters]);
+
+  const deleteItem = async (record) => {
+    await dispatch(remove(record._id, token));
+
+    /*if (user._id === record._id) {
+      dispatch(logOut());
+    }*/
+
+    dispatch(get(queryParams, token));
+  };
 
   const onPaginationChange = (page, pageSize) => {
     setPage({
@@ -122,22 +125,7 @@ function ProductTable({ history, match }) {
       ...page,
       currentPage: 1,
     });
-    setSearchValue(e.target.value);
-  };
-
-  useEffect(() => {
-    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
-    dispatch(getCategories(`/dashboard/categories`, user.token));
-  }, [page, sorter, filters]);
-
-  const deleteItem = async (record) => {
-    await dispatch(delOne(record._id, user.token));
-
-    /*if (user._id === record._id) {
-      dispatch(logOut());
-    }*/
-
-    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
+    setSearch(e.target.value);
   };
 
   const onChange = (pagination, filters, sorter, extra) => {
@@ -177,11 +165,11 @@ function ProductTable({ history, match }) {
       />
       <Table
         loading={{
-          spinning: isLoading,
+          spinning: loading,
           indicator: <Spin />,
         }}
         rowKey="id"
-        dataSource={dataArr}
+        dataSource={dataArray}
         columns={columns}
         onChange={onChange}
         onRow={onRow}
