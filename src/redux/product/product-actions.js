@@ -42,7 +42,7 @@ export const getArr = (endpoint, token) => {
 };
 
 export const getOne = (id, token) => {
-  const endpoint = `/admin/products/${id}`;
+  const endpoint = `/dashboard/products/${id}`;
 
   const config = {
     headers: {
@@ -83,7 +83,7 @@ export const getOne = (id, token) => {
 // POST
 
 export const post = (formData, token) => {
-  const endpoint = '/admin/products/new';
+  const endpoint = '/dashboard/products/new';
 
   const config = {
     headers: {
@@ -124,7 +124,7 @@ export const post = (formData, token) => {
 // PUT
 
 export const put = (id, formData, token) => {
-  const endpoint = `/admin/products/${id}`;
+  const endpoint = `/dashboard/products/${id}`;
 
   const config = {
     headers: {
@@ -165,7 +165,7 @@ export const put = (id, formData, token) => {
 // DELETE
 
 export const delOne = (id, token) => {
-  const endpoint = `/admin/products/${id}`;
+  const endpoint = `/dashboard/products/${id}`;
 
   const config = {
     headers: {

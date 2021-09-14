@@ -93,7 +93,7 @@ function CategoryTable({ history, match }) {
   };
 
   useEffect(() => {
-    dispatch(getArr(`/admin/${match.url}?${urlQueryStr}`, user.token));
+    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
   }, [page, sorter, filters]);
 
   const deleteItem = async (record) => {
@@ -103,7 +103,7 @@ function CategoryTable({ history, match }) {
       dispatch(logOut());
     }*/
 
-    dispatch(getArr(`/admin/${match.url}?${urlQueryStr}`, user.token));
+    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
   };
 
   const onChange = (pagination, filters, sorter, extra) => {

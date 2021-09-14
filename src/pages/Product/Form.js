@@ -170,7 +170,7 @@ function ProductForm({ match, history }) {
                     accept=".jpeg,.jpg,.png"
                     listType="picture-card"
                     showUploadList={false}
-                    action="/admin/upload"
+                    action="/dashboard/upload"
                     beforeUpload={beforeImageUpload}
                     onChange={handleUploadChange}
                     headers={

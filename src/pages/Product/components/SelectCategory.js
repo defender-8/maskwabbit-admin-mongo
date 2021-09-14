@@ -14,7 +14,7 @@ function SelectCategory({ onChange, value }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch(getArr(`/admin/categories`, user.token));
+      dispatch(getArr(`/dashboard/categories`, user.token));
   }, []);
 
   return (

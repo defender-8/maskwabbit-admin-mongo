@@ -126,8 +126,8 @@ function ProductTable({ history, match }) {
   };
 
   useEffect(() => {
-    dispatch(getArr(`/admin/${match.url}?${urlQueryStr}`, user.token));
-    dispatch(getCategories(`/admin/categories`, user.token));
+    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
+    dispatch(getCategories(`/dashboard/categories`, user.token));
   }, [page, sorter, filters]);
 
   const deleteItem = async (record) => {
@@ -137,7 +137,7 @@ function ProductTable({ history, match }) {
       dispatch(logOut());
     }*/
 
-    dispatch(getArr(`/admin/${match.url}?${urlQueryStr}`, user.token));
+    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
   };
 
   const onChange = (pagination, filters, sorter, extra) => {

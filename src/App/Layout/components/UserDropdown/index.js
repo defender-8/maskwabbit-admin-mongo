@@ -3,32 +3,31 @@ import {
   DownOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  selectCurrentUser,
-} from '../../../redux/auth/auth-selectors';
+  selectUser,
+} from '../../../../redux/auth/auth-selectors';
 
-import Dropdown from '../../Dropdown/Dropdown';
-import UserMenu from '../../Menu/UserMenu/UserMenu';
+import { Dropdown } from '../../../../base/components';
+import UserMenu from './UserMenu';
 
-import './UserDropdown.scss';
+import './index.less';
 
-function UserDropdown({ currentUser }) {
+function UserDropdown({ user }) {
 
   return (
     <Dropdown overlay={<UserMenu />} className="UserDropdown">
       <div className="text-link">
-        <UserOutlined /> {currentUser.firstName} <DownOutlined />
+        <UserOutlined /> {user.firstName} <DownOutlined />
       </div>
     </Dropdown>
   );
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+  user: selectUser,
 });
 
 export default connect(mapStateToProps)(UserDropdown);
