@@ -26,7 +26,12 @@ div.ant-select {
 
   &:not(.ant-select-customize-input) {
     .ant-select-selector {
-      .input();
+      border-radius: 8px;
+      border-color: @bgGrey;
+      padding: 3px 16px;
+      background-color: @bgGrey;
+      font-size: 16px;
+      color: @textDark;
     }
 
     &:hover {
@@ -47,14 +52,6 @@ div.ant-select {
         .ant-select-selector {
           .inputFocus();
         }
-      }
-    }
-  }
-
-  &.ant-select-single {
-    &:not(.ant-select-customize-input) {
-      .ant-select-selector {
-        height: 39px;
       }
     }
   }

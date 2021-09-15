@@ -23,8 +23,8 @@ function ProductTable({ history, match }) {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState({
-    currentPage: 1,
-    pageSize: 10,
+    current: 1,
+    size: 10,
   });
   const [search, setSearch] = useState('');
   const [sorter, setSorter] = useState({ createdAt: 'desc' });
@@ -113,17 +113,17 @@ function ProductTable({ history, match }) {
     dispatch(get(queryParams, token));
   };
 
-  const onPaginationChange = (page, pageSize) => {
+  const onPaginationChange = (current, size) => {
     setPage({
-      currentPage: page,
-      pageSize,
+      current,
+      size,
     });
   };
 
   const onSearchChange = (e) => {
     setPage({
       ...page,
-      currentPage: 1,
+      current: 1,
     });
     setSearch(e.target.value);
   };
@@ -178,8 +178,8 @@ function ProductTable({ history, match }) {
       />
       <div className="mt-3 text-right">
         <Pagination
-          current={page.currentPage}
-          pageSize={page.pageSize}
+          current={page.current}
+          pageSize={page.size}
           total={total}
           showSizeChanger
           showQuickJumper
