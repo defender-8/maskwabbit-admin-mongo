@@ -11,8 +11,10 @@ import { getArr as getCategories } from '../../redux/category/category-actions';
 
 import { stopPropagation } from '../../base/utils/event';
 
+import { useDidUpdateEffect } from '../../base/hooks';
+
 import Layout from '../../App/Layout';
-import { Spin, Table, Pagination, Avatar, Tag } from '../../base/components';
+import { Spin, Table, Pagination, Avatar, Tag, message } from '../../base/components';
 import { ArrayHeader, DeleteItem } from '../../components';
 
 function ProductTable({ history, match }) {
@@ -89,8 +91,7 @@ function ProductTable({ history, match }) {
       render: (text, record) => (
         <>
           <EditFilled className="mr-2" />
-          <DeleteItem delFunc={deleteItem} record={record} />
-          {/*<DeleteItem delFunc={deleteItem} record={record} loading={delLoading} />*/}
+          <DeleteItem onDelete={onDelete} record={record} />
         </>
       ),
     },
@@ -103,13 +104,14 @@ function ProductTable({ history, match }) {
     dispatch(getCategories(`/dashboard/categories`, token));
   }, [page, sorter, filters]);
 
-  const deleteItem = async (record) => {
+  useDidUpdateEffect(() => {
+    if (errorMessage) {
+      message.error(errorMessage);
+    }
+  }, [errorMessage]);
+
+  const onDelete = async (record) => {
     await dispatch(remove(record._id, token));
-
-    /*if (user._id === record._id) {
-      dispatch(logOut());
-    }*/
-
     dispatch(get(queryParams, token));
   };
 

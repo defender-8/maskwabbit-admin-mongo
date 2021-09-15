@@ -7,7 +7,7 @@ import { stopPropagation } from '../../base/utils/event';
 
 import { Popconfirm } from '../../base/components';
 
-function DeleteItem({ delFunc, record, loading }) {
+function DeleteItem({ onDelete, record, loading }) {
 
   const [visible, setVisible] = useState(false);
 
@@ -20,9 +20,9 @@ function DeleteItem({ delFunc, record, loading }) {
   }, [setVisible]);
 
   const confirm = useCallback(async (e) => {
-    await delFunc(record);
+    await onDelete(record);
     hide();
-  }, [delFunc, record, hide]);
+  }, [onDelete, record, hide]);
 
   return (
     <div onClick={stopPropagation} className="d-inline-block">
