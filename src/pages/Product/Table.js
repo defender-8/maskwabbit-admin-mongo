@@ -14,7 +14,7 @@ import { stopPropagation } from '../../base/utils/event';
 import { useDidUpdateEffect } from '../../base/hooks';
 
 import Layout from '../../App/Layout';
-import { Spin, Table, Pagination, Avatar, Tag, message } from '../../base/components';
+import { Spin, Table, Pagination, Avatar, Tag, message, notification } from '../../base/components';
 import { ArrayHeader, DeleteItem } from '../../components';
 
 function ProductTable({ history, match }) {
@@ -106,13 +106,16 @@ function ProductTable({ history, match }) {
 
   useDidUpdateEffect(() => {
     if (errorMessage) {
-      message.error(errorMessage);
+      notification.error({
+        message: 'Error',
+        description: errorMessage,
+        duration: 0,
+      });
     }
   }, [errorMessage]);
 
   const onDelete = async (record) => {
-    await dispatch(remove(record._id, token));
-    dispatch(get(queryParams, token));
+    await dispatch(remove(record._id, queryParams, token));
   };
 
   const onPaginationChange = (current, size) => {
@@ -131,8 +134,6 @@ function ProductTable({ history, match }) {
   };
 
   const onChange = (pagination, filters, sorter, extra) => {
-    console.log('>>>>>sorter:\n', sorter, '\n>>>>>filters:\n', filters);
-
     const { field, order } = sorter;
 
     if (order) {

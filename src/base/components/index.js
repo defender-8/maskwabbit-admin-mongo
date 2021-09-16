@@ -23,6 +23,7 @@ import Layout from './Layout';
 import Menu from './Menu';
 import message from './message';
 import Modal from './Modal';
+import notification from './notification';
 import Pagination from './Pagination';
 import PassCode from './PassCode';
 import Popconfirm from './Popconfirm';
@@ -75,6 +76,7 @@ export {
   Menu,
   message,
   Modal,
+  notification,
   Pagination,
   PassCode,
   Popconfirm,

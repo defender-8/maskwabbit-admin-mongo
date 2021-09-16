@@ -158,8 +158,8 @@ export const put = (id, formData, token) => {
   };
 };
 
-export const remove = (id, token) => {
-  const endpoint = `/dashboard/products/${id}`;
+export const remove = (id, queryParams, token) => {
+  const endpoint = `/dashboard/productss/${id}`;
 
   const config = {
     headers: {
@@ -179,6 +179,7 @@ export const remove = (id, token) => {
         type: actionTypes.DELETE,
         payload: data.message,
       });
+      dispatch(get(queryParams, token));
     } catch (err) {
       let payload;
 
