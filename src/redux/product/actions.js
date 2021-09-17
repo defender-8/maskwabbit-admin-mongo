@@ -159,7 +159,7 @@ export const put = (id, formData, token) => {
 };
 
 export const remove = (id, queryParams, token) => {
-  const endpoint = `/dashboard/productss/${id}`;
+  const endpoint = `/dashboard/products/${id}`;
 
   const config = {
     headers: {

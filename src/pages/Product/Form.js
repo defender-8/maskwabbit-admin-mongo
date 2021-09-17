@@ -7,14 +7,14 @@ import { getById, post, put, remove } from '../../redux/product/actions';
 import { beforeImageUpload } from '../../utils/file';
 
 import Layout from '../../App/Layout';
-import { Spin, Form, FormItem, Input, InputNumber, Upload, Alert, message, Row, Col } from '../../base/components';
+import { Spin, Form, FormItem, Input, InputNumber, Upload, UploadImage, Alert, message, Row, Col } from '../../base/components';
 import { FormActions } from '../../components';
 import SelectCategory from './components/SelectCategory';
 
 function ProductForm({ match, history }) {
   const { params: { id }, url } = match;
 
-  const { user } = useSelector(state => state.auth);
+  const { user: { token } } = useSelector(state => state.auth);
   const { loading, errorMessage, successMessage, dataSingle } = useSelector(state => state.product);
 
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function ProductForm({ match, history }) {
 
   useEffect(() => {
     if (id) {
-      dispatch(getById(id, user.token));
+      dispatch(getById(id, token));
     }
   }, [id]);
 
@@ -51,7 +51,9 @@ function ProductForm({ match, history }) {
   };
 
   useEffect(() => {
-    setFormFieldsValueFromProps();
+    if (id) {
+      setFormFieldsValueFromProps();
+    }
   }, [dataSingle]);
 
   useEffect(() => {
@@ -81,13 +83,13 @@ function ProductForm({ match, history }) {
     Object.keys(values).forEach(key => formData.append(key, values[key]));
 
     if (!id) {
-      await dispatch(post(formData, user.token));
+      await dispatch(post(formData, token));
 
       form.resetFields();
       setImageUrl(null);
 
     } else {
-      await dispatch(put(id, formData, user.token));
+      await dispatch(put(id, formData, token));
 
       form.setFieldsValue(values);
     }
@@ -106,7 +108,7 @@ function ProductForm({ match, history }) {
   };
 
   const deleteItem = async () => {
-    await dispatch(remove(id, user.token));
+    await dispatch(remove(id, token));
     history.replace(url.substring(0, url.indexOf(`/${id}`)));
   };
 
@@ -162,7 +164,7 @@ function ProductForm({ match, history }) {
                   label="Image"
                   rules={[{ required: true }]}
                 >
-                  <Upload
+                  {/*<Upload
                     name="image"
                     accept=".jpeg,.jpg,.png"
                     listType="picture-card"
@@ -189,7 +191,8 @@ function ProductForm({ match, history }) {
                         </div>
                       )
                     }
-                  </Upload>
+                  </Upload>*/}
+                  <UploadImage token={token} imageUrl={imageUrl} imageLoading={imageLoading} onChange={handleUploadChange} />
                 </FormItem>
                 <Row gutter={16}>
                   <Col sm={24} md={8}>
