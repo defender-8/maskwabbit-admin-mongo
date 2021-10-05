@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getById, post, put, remove } from '../../redux/product/actions';
 
-import { beforeImageUpload } from '../../utils/file';
+import useUploadImage from '../../base/components/Upload/UploadImage/useUploadImage';
 
 import Layout from '../../App/Layout';
-import { Spin, Form, FormItem, Input, InputNumber, Upload, UploadImage, Alert, message, Row, Col } from '../../base/components';
+import { Spin, Form, FormItem, Input, InputNumber, UploadImage, Alert, message, Row, Col } from '../../base/components';
 import { FormActions } from '../../components';
 import SelectCategory from './components/SelectCategory';
 
@@ -19,14 +18,14 @@ function ProductForm({ match, history }) {
 
   const dispatch = useDispatch();
 
-  const [imageUrl, setImageUrl] = useState(null);
-  const [imageLoading, setImageLoading] = useState(false);
   const [errMess, setErrMess] = useState(false);
   const [isSpinHidden, setIsSpinHidden] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
   const [delLoading, setDelLoading] = useState(false);
 
   const [form] = Form.useForm();
+
+  const { onChange, imageLoading, imageUrl } = useUploadImage();
 
   useEffect(() => {
     if (id) {
@@ -45,8 +44,6 @@ function ProductForm({ match, history }) {
         amount,
         categories,
       });
-
-      setImageUrl('/' + image);
     }
   };
 
@@ -86,24 +83,12 @@ function ProductForm({ match, history }) {
       await dispatch(post(formData, token));
 
       form.resetFields();
-      setImageUrl(null);
+      // setImageUrl(null);
 
     } else {
       await dispatch(put(id, formData, token));
 
       form.setFieldsValue(values);
-    }
-  };
-
-  const handleUploadChange = (info) => {
-    if (info.file.status === 'uploading') {
-
-      setImageLoading(true);
-      return;
-    }
-    if (info.file.status === 'done') {
-      setImageLoading(false);
-      setImageUrl('/' + info.file.response.imagePath);
     }
   };
 
@@ -164,35 +149,7 @@ function ProductForm({ match, history }) {
                   label="Image"
                   rules={[{ required: true }]}
                 >
-                  {/*<Upload
-                    name="image"
-                    accept=".jpeg,.jpg,.png"
-                    listType="picture-card"
-                    showUploadList={false}
-                    action="/dashboard/upload"
-                    beforeUpload={beforeImageUpload}
-                    onChange={handleUploadChange}
-                    headers={
-                      { 'Authorization': 'Bearer ' + user.token }
-                    }
-                  >
-                    {imageUrl ?
-                      <img
-                        src={imageUrl}
-                        alt="avatar"
-                        style={{
-                          maxHeight: '100%',
-                          maxWidth: '100%',
-                        }} />
-                      : (
-                        <div>
-                          {imageLoading ? <LoadingOutlined /> : <PlusOutlined />}
-                          <div style={{ marginTop: 8 }}>Upload</div>
-                        </div>
-                      )
-                    }
-                  </Upload>*/}
-                  <UploadImage token={token} imageUrl={imageUrl} imageLoading={imageLoading} onChange={handleUploadChange} />
+                  <UploadImage token={token} onChange={onChange} imageLoading={imageLoading} imageUrl={imageUrl} />
                 </FormItem>
                 <Row gutter={16}>
                   <Col sm={24} md={8}>

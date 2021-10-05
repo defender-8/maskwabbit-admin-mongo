@@ -8,7 +8,7 @@ export const signIn = formData => {
       type: authActionTypes.RESET_AUTH_MESSAGE,
     });
     try {
-      const res = await axios.post('/admin/sign-in', formData);
+      const res = await axios.post('/dashboard/auth/sign-in', formData);
       const data = res.data;
 
       dispatch({
@@ -47,7 +47,7 @@ export const postResetPassword = formData => {
       type: authActionTypes.RESET_AUTH_MESSAGE,
     });
     try {
-      const res = await axios.post('/admin/password-reset', formData);
+      const res = await axios.post('/dashboard/auth/password-reset', formData);
       const data = res.data;
       dispatch({
         type: authActionTypes.POST_RESET_PASSWORD,

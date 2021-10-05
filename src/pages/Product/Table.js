@@ -41,7 +41,7 @@ function ProductTable({ history, match }) {
         return (
           <Avatar
             size="large"
-            src={image}
+            src={'/' + image}
           />
         );
       },
