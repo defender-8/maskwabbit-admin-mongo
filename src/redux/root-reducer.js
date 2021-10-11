@@ -6,7 +6,7 @@ import authReducer from './auth/auth-reducer';
 import adminReducer from './admin/admin-reducer';
 import clientReducer from './client/client-reducer';
 import productReducer from './product/reducer';
-import categoryReducer from './category/category-reducer';
+import categoryReducer from './category/reducer';
 import orderReducer from './order/order-reducer';
 
 const persistConfig = {

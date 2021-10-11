@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getById, post, put, remove } from '../../redux/product/actions';
@@ -6,7 +6,19 @@ import { getById, post, put, remove } from '../../redux/product/actions';
 import useUploadImage from '../../base/components/Upload/UploadImage/useUploadImage';
 
 import Layout from '../../App/Layout';
-import { Spin, Form, FormItem, Input, InputNumber, UploadImage, Alert, message, Row, Col } from '../../base/components';
+import {
+  Spin,
+  Empty,
+  GoBackButton,
+  Form,
+  FormItem,
+  Input,
+  InputNumber,
+  UploadImage,
+  notification,
+  Row,
+  Col,
+} from '../../base/components';
 import { FormActions } from '../../components';
 import SelectCategory from './components/SelectCategory';
 
@@ -14,14 +26,10 @@ function ProductForm({ match, history }) {
   const { params: { id }, url } = match;
 
   const { user: { token } } = useSelector(state => state.auth);
-  const { loading, errorMessage, successMessage, dataSingle } = useSelector(state => state.product);
+  const { loading, saving, removing, errorMessage, cudError, successMessage, dataSingle } = useSelector(
+    state => state.product);
 
   const dispatch = useDispatch();
-
-  const [errMess, setErrMess] = useState(false);
-  const [isSpinHidden, setIsSpinHidden] = useState(false);
-  const [saveLoading, setSaveLoading] = useState(false);
-  const [delLoading, setDelLoading] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -29,7 +37,7 @@ function ProductForm({ match, history }) {
 
   useEffect(() => {
     if (id) {
-      dispatch(getById(id, token));
+      dispatch(getById(token, id));
     }
   }, [id]);
 
@@ -55,7 +63,7 @@ function ProductForm({ match, history }) {
 
   useEffect(() => {
     if (successMessage) {
-      message.success(successMessage);
+      notification(successMessage).success();
     }
   }, [successMessage]);
 
@@ -63,8 +71,7 @@ function ProductForm({ match, history }) {
     const values = form.getFieldsValue();
 
     if (errorMessage) {
-      setErrMess(true);
-      message.error(errorMessage);
+      notification(errorMessage).error();
     }
 
     form.setFieldsValue(values);
@@ -80,115 +87,99 @@ function ProductForm({ match, history }) {
     Object.keys(values).forEach(key => formData.append(key, values[key]));
 
     if (!id) {
-      await dispatch(post(formData, token));
+      await dispatch(post(token, formData));
 
       form.resetFields();
-      // setImageUrl(null);
 
     } else {
-      await dispatch(put(id, formData, token));
+      await dispatch(put(token, id, formData));
 
       form.setFieldsValue(values);
     }
   };
 
   const deleteItem = async () => {
-    await dispatch(remove(id, token));
+    await dispatch(remove(token, id));
     history.replace(url.substring(0, url.indexOf(`/${id}`)));
-  };
-
-  const turnOnSaveLoading = () => {
-    setSaveLoading(true);
-    setDelLoading(false);
-    setIsSpinHidden(true);
-  };
-
-  const turnOnDelLoading = () => {
-    setSaveLoading(false);
-    setDelLoading(true);
-    setIsSpinHidden(true);
   };
 
   return (
     <Layout title={!id ? 'Add New Product' : 'Edit Product'}>
       {
-        (errorMessage && !errMess) ?
-          <Alert
-            message="Error"
-            description={errorMessage}
-            type="error"
-            showIcon
-          /> : null
-      }
-      {
-        (loading && !isSpinHidden && !errorMessage) ?
-          <Spin /> : (
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onFinish}
-            >
-              <FormActions
-                deleteItem={deleteItem}
-                isItemNew={!id}
-                saveLoading={saveLoading ? loading : false}
-                delLoading={delLoading ? loading : false}
-                turnOnSaveLoading={turnOnSaveLoading}
-                turnOnDelLoading={turnOnDelLoading}
-              />
-              <div className="container-sm">
-                <FormItem
-                  name="title"
-                  label="Title"
-                  rules={[{ required: true }]}
-                >
-                  <Input />
-                </FormItem>
-                <FormItem
-                  name="image"
-                  label="Image"
-                  rules={[{ required: true }]}
-                >
-                  <UploadImage token={token} onChange={onChange} imageLoading={imageLoading} imageUrl={imageUrl} />
-                </FormItem>
-                <Row gutter={16}>
-                  <Col sm={24} md={8}>
-                    <FormItem
-                      name="categories"
-                      label="Categories:"
-                      rules={[{ required: true }]}
-                    >
-                      <SelectCategory />
-                    </FormItem>
-                  </Col>
-                  <Col sm={24} md={8}>
-                    <Form.Item
-                      name="price"
-                      label="Price:"
-                      rules={[{ required: true }]}
-                    >
-                      <InputNumber step={0.1} />
-                    </Form.Item>
-                  </Col>
-                  <Col sm={24} md={8}>
-                    <Form.Item
-                      name="amount"
-                      label="Amount:"
-                      rules={[{ required: true }]}
-                    >
-                      <InputNumber />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <FormItem
-                  name="description"
-                  label="Description"
-                >
-                  <Input.TextArea rows={3} />
-                </FormItem>
-              </div>
-            </Form>
-          )
+        loading ?
+          <Spin /> : errorMessage && !cudError ?
+          <>
+            <GoBackButton />
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </> :
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+          >
+            <FormActions
+              deleteItem={deleteItem}
+              isItemNew={!id}
+              saving={saving}
+              removing={removing}
+            />
+            <div className="container-sm">
+              <FormItem
+                name="title"
+                label="Title"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </FormItem>
+              <FormItem
+                name="image"
+                label="Image"
+                rules={[{ required: true }]}
+              >
+                <UploadImage
+                  token={token}
+                  onChange={onChange}
+                  imageLoading={imageLoading}
+                  imageUrl={imageUrl}
+                />
+              </FormItem>
+              <Row gutter={16}>
+                <Col sm={24} md={8}>
+                  <FormItem
+                    name="categories"
+                    label="Categories:"
+                    rules={[{ required: true }]}
+                  >
+                    <SelectCategory />
+                  </FormItem>
+                </Col>
+                <Col sm={24} md={8}>
+                  <Form.Item
+                    name="price"
+                    label="Price:"
+                    rules={[{ required: true }]}
+                  >
+                    <InputNumber step={0.1} />
+                  </Form.Item>
+                </Col>
+                <Col sm={24} md={8}>
+                  <Form.Item
+                    name="amount"
+                    label="Amount:"
+                    rules={[{ required: true }]}
+                  >
+                    <InputNumber />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <FormItem
+                name="description"
+                label="Description"
+              >
+                <Input.TextArea rows={3} />
+              </FormItem>
+            </div>
+          </Form>
       }
     </Layout>
   );

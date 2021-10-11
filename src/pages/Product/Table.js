@@ -7,20 +7,20 @@ import {
 import moment from 'moment';
 
 import { get, remove } from '../../redux/product/actions';
-import { getArr as getCategories } from '../../redux/category/category-actions';
+import { get as getCategories } from '../../redux/category/actions';
 
 import { stopPropagation } from '../../base/utils/event';
 
 import { useDidUpdateEffect } from '../../base/hooks';
 
 import Layout from '../../App/Layout';
-import { Spin, Table, Pagination, Avatar, Tag, message, notification } from '../../base/components';
+import { Spin, Table, Pagination, Avatar, Tag, notification } from '../../base/components';
 import { ArrayHeader, DeleteItem } from '../../components';
 
 function ProductTable({ history, match }) {
   const { user: { token } } = useSelector(state => state.auth);
-  const { categories } = useSelector(state => state.category);
-  const { loading, errorMessage, dataArray, total } = useSelector(state => state.product);
+  const { dataArray: allCategories } = useSelector(state => state.category);
+  const { loading, removing, errorMessage, dataArray, total } = useSelector(state => state.product);
 
   const dispatch = useDispatch();
 
@@ -70,7 +70,7 @@ function ProductTable({ history, match }) {
             </Tag>
           ),
         ),
-      filters: categories?.map(c => ({text: c.title, value: c._id})),
+      filters: allCategories?.map(c => ({text: c.title, value: c._id})),
     },
     {
       title: 'Amount',
@@ -91,31 +91,30 @@ function ProductTable({ history, match }) {
       render: (text, record) => (
         <>
           <EditFilled className="mr-2" />
-          <DeleteItem onDelete={onDelete} record={record} />
+          <DeleteItem onDelete={onDelete} record={record} loading={removing} />
         </>
       ),
     },
   ];
 
-  const queryParams = { page, sorter, filters, search }
+  const queryParams = { page, sorter, filters, search };
 
   useEffect(() => {
-    dispatch(get(queryParams, token));
-    dispatch(getCategories(`/dashboard/categories`, token));
+    dispatch(getCategories(token));
+  }, []);
+
+  useEffect(() => {
+    dispatch(get(token, queryParams));
   }, [page, sorter, filters]);
 
   useDidUpdateEffect(() => {
     if (errorMessage) {
-      notification.error({
-        message: 'Error',
-        description: errorMessage,
-        duration: 0,
-      });
+      notification(errorMessage).error();
     }
   }, [errorMessage]);
 
   const onDelete = async (record) => {
-    await dispatch(remove(record._id, queryParams, token));
+    await dispatch(remove(token, record._id, queryParams));
   };
 
   const onPaginationChange = (current, size) => {

@@ -32,7 +32,7 @@ function DeleteItem({ onDelete, record, loading }) {
         onConfirm={confirm}
         okText="Yes"
         cancelText="Cancel"
-        // okButtonProps={{loading}}
+        okButtonProps={{loading}}
         onCancel={hide}
       >
         <DeleteFilled onClick={show} />

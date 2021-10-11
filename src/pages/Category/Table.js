@@ -4,29 +4,26 @@ import {
   EditFilled,
 } from '@ant-design/icons';
 import moment from 'moment';
-import qs from 'qs';
 
-import { getArr, delOne } from '../../redux/category/category-actions';
+import { get, remove } from '../../redux/category/actions';
+
+import { useDidUpdateEffect } from '../../base/hooks';
 
 import Layout from '../../App/Layout';
-import { Spin, Table, Pagination, Avatar } from '../../base/components';
+import { Spin, Table, Pagination, Avatar, notification } from '../../base/components';
 import { ArrayHeader, DeleteItem } from '../../components';
 
 function CategoryTable({ history, match }) {
-  const user = useSelector(state => state.auth.user);
-
-  const isLoading = useSelector(state => state.category.isLoading);
-  const errorMessage = useSelector(state => state.category.errorMessage);
-  const dataArr = useSelector(state => state.category.categories);
-  const total = useSelector(state => state.category.total);
+  const { user: { token } } = useSelector(state => state.auth);
+  const { loading, removing, errorMessage, dataArray, total } = useSelector(state => state.category);
 
   const dispatch = useDispatch();
 
   const [page, setPage] = useState({
-    currentPage: 1,
-    pageSize: 10,
+    current: 1,
+    size: 10,
   });
-  const [searchValue, setSearchValue] = useState('');
+  const [search, setSearch] = useState('');
   const [sorter, setSorter] = useState({ createdAt: 'desc' });
   const [filters, setFilters] = useState(null);
 
@@ -38,7 +35,7 @@ function CategoryTable({ history, match }) {
       render: (image) => (
         <Avatar
           size="large"
-          src={image}
+          src={'/' + image}
         />
       ),
     },
@@ -61,54 +58,44 @@ function CategoryTable({ history, match }) {
       render: (text, record) => (
         <>
           <EditFilled className="mr-2" />
-          <DeleteItem delFunc={deleteItem} record={record} />
-          {/*<DeleteItem delFunc={deleteItem} record={record} loading={delLoading} />*/}
+          <DeleteItem onDelete={onDelete} record={record} loading={removing} />
         </>
       ),
     },
   ];
 
-  const stateQueryStr = qs.stringify({
-    page,
-    sorter,
-    filters,
-    search: searchValue,
-  });
-  // const userRoleQueryStr = `&role=${userRole || null}`;
-  const urlQueryStr = stateQueryStr/* + userRoleQueryStr*/;
+  const queryParams = { page, sorter, filters, search }
 
-  const onPaginationChange = (page, pageSize) => {
+  useEffect(() => {
+    dispatch(get(token, queryParams));
+  }, [page, sorter, filters]);
+
+  useDidUpdateEffect(() => {
+    if (errorMessage) {
+      notification(errorMessage).error();
+    }
+  }, [errorMessage]);
+
+  const onDelete = async (record) => {
+    await dispatch(remove(token, record._id, queryParams));
+  };
+
+  const onPaginationChange = (current, size) => {
     setPage({
-      currentPage: page,
-      pageSize,
+      current,
+      size,
     });
   };
 
   const onSearchChange = (e) => {
     setPage({
       ...page,
-      currentPage: 1,
+      current: 1,
     });
-    setSearchValue(e.target.value);
-  };
-
-  useEffect(() => {
-    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
-  }, [page, sorter, filters]);
-
-  const deleteItem = async (record) => {
-    await dispatch(delOne(record._id, user.token));
-
-    /*if (user._id === record._id) {
-      dispatch(logOut());
-    }*/
-
-    dispatch(getArr(`/dashboard/${match.url}?${urlQueryStr}`, user.token));
+    setSearch(e.target.value);
   };
 
   const onChange = (pagination, filters, sorter, extra) => {
-    console.log('>>>>>sorter:\n', sorter, '\n>>>>>filters:\n', filters);
-
     const { field, order } = sorter;
 
     if (order) {
@@ -129,7 +116,7 @@ function CategoryTable({ history, match }) {
   const onRow = (record, index) => {
     return {
       onClick: e => {
-        history.push(match.url + '/' + record.id);
+        history.push(match.url + '/' + record._id);
       },
     };
   };
@@ -143,11 +130,11 @@ function CategoryTable({ history, match }) {
       />
       <Table
         loading={{
-          spinning: isLoading,
+          spinning: loading,
           indicator: <Spin />,
         }}
         rowKey="id"
-        dataSource={dataArr}
+        dataSource={dataArray}
         columns={columns}
         onChange={onChange}
         onRow={onRow}
@@ -156,8 +143,8 @@ function CategoryTable({ history, match }) {
       />
       <div className="mt-3 text-right">
         <Pagination
-          current={page.currentPage}
-          pageSize={page.pageSize}
+          current={page.current}
+          pageSize={page.size}
           total={total}
           showSizeChanger
           showQuickJumper

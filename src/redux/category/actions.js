@@ -1,10 +1,9 @@
 import axios from 'axios';
+import qs from 'qs';
 
-import categoryActionTypes from './category-action-types';
+import actionTypes from './action-types';
 
-// GET
-
-export const getArr = (endpoint, token) => {
+export const get = (token, queryParams) => {
   const config = {
     headers: {
       'Authorization': 'Bearer ' + token,
@@ -13,16 +12,19 @@ export const getArr = (endpoint, token) => {
 
   return async dispatch => {
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORY_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORIES,
+      type: actionTypes.RESET_ARRAY,
     });
+
     try {
-      const res = await axios.get(endpoint, config);
+      const res = await axios.get(`/dashboard/categories/?${qs.stringify(queryParams)}`, config);
       const data = res.data;
+
       dispatch({
-        type: categoryActionTypes.GET_CATEGORIES,
+        type: actionTypes.GET,
         payload: data,
       });
     } catch (err) {
@@ -35,15 +37,15 @@ export const getArr = (endpoint, token) => {
       }
 
       dispatch({
-        type: categoryActionTypes.GET_CATEGORY_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
 
-export const getOne = (id, token) => {
-  const endpoint = `/admin/product-categories/${id}`;
+export const getById = (token, id) => {
+  const endpoint = `/dashboard/categories/${id}`;
 
   const config = {
     headers: {
@@ -53,17 +55,20 @@ export const getOne = (id, token) => {
 
   return async dispatch => {
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORY_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORY,
+      type: actionTypes.RESET_SINGLE,
     });
+
     try {
       const res = await axios.get(endpoint, config);
       const data = res.data;
+
       dispatch({
-        type: categoryActionTypes.GET_CATEGORY,
-        payload: data.category,
+        type: actionTypes.GET_BY_ID,
+        payload: data.dataSingle,
       });
     } catch (err) {
       let payload;
@@ -75,17 +80,15 @@ export const getOne = (id, token) => {
       }
 
       dispatch({
-        type: categoryActionTypes.GET_CATEGORY_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
 
-// POST
-
-export const post = (formData, token) => {
-  const endpoint = '/admin/product-categories/new';
+export const post = (token, formData) => {
+  const endpoint = '/dashboard/categories/new';
 
   const config = {
     headers: {
@@ -96,13 +99,19 @@ export const post = (formData, token) => {
 
   return async dispatch => {
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORY_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
+    dispatch({
+      type: actionTypes.SAVING,
+    });
+
     try {
       const res = await axios.post(endpoint, formData, config);
       const data = res.data;
+
       dispatch({
-        type: categoryActionTypes.POST_CATEGORY,
+        type: actionTypes.POST,
         payload: data.message,
       });
     } catch (err) {
@@ -115,17 +124,19 @@ export const post = (formData, token) => {
       }
 
       dispatch({
-        type: categoryActionTypes.GET_CATEGORY_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
+      });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
       });
     }
   };
 };
 
-// PUT
-
-export const put = (id, formData, token) => {
-  const endpoint = `/admin/product-categories/${id}`;
+export const put = (token, id, formData) => {
+  const endpoint = `/dashboard/categories/${id}`;
 
   const config = {
     headers: {
@@ -136,14 +147,19 @@ export const put = (id, formData, token) => {
 
   return async dispatch => {
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORY_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
+    });
+
+    dispatch({
+      type: actionTypes.SAVING,
     });
 
     try {
       const res = await axios.put(endpoint, formData, config);
       const data = res.data;
+
       dispatch({
-        type: categoryActionTypes.PUT_CATEGORY,
+        type: actionTypes.PUT,
         payload: data,
       });
     } catch (err) {
@@ -156,17 +172,19 @@ export const put = (id, formData, token) => {
       }
 
       dispatch({
-        type: categoryActionTypes.GET_CATEGORY_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
+      });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
       });
     }
   };
 };
 
-// DELETE
-
-export const delOne = (id, token) => {
-  const endpoint = `/admin/product-categories/${id}`;
+export const remove = (token, id, queryParams) => {
+  const endpoint = `/dashboard/categories/${id}`;
 
   const config = {
     headers: {
@@ -176,16 +194,25 @@ export const delOne = (id, token) => {
 
   return async dispatch => {
     dispatch({
-      type: categoryActionTypes.RESET_CATEGORY_MESSAGE_ONLY,
+      type: actionTypes.RESET_MESSAGE_ONLY,
+    });
+
+    dispatch({
+      type: actionTypes.REMOVING,
     });
 
     try {
       const res = await axios.delete(endpoint, config);
       const data = res.data;
+
       dispatch({
-        type: categoryActionTypes.DELETE_CATEGORY,
+        type: actionTypes.DELETE,
         payload: data.message,
       });
+
+      if (queryParams) {
+        dispatch(get(token, queryParams));
+      }
     } catch (err) {
       let payload;
 
@@ -196,8 +223,12 @@ export const delOne = (id, token) => {
       }
 
       dispatch({
-        type: categoryActionTypes.GET_CATEGORY_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
+      });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
       });
     }
   };

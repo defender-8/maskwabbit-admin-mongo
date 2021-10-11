@@ -4,6 +4,7 @@ import Badge from './Badge';
 import BtnTab from './BtnTab';
 import Button from './Button';
 import BtnClose from './Button/BtnClose';
+import GoBackButton from './Button/GoBackButton';
 // import Carousel from './Carousel';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './Checkbox/CheckboxGroup';
@@ -57,6 +58,7 @@ export {
   BtnTab,
   Button,
   BtnClose,
+  GoBackButton,
   // Carousel,
   Checkbox,
   CheckboxGroup,

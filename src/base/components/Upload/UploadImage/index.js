@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 
-import { beforeImageUpload } from '../../../../utils/file';
+import { beforeImageUpload } from '../../../utils/file';
 
 import Upload from '../index';
 

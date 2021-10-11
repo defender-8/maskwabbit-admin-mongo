@@ -3,7 +3,7 @@ import qs from 'qs';
 
 import actionTypes from './action-types';
 
-export const get = (queryParams, token) => {
+export const get = (token, queryParams) => {
   const config = {
     headers: {
       'Authorization': 'Bearer ' + token,
@@ -14,12 +14,15 @@ export const get = (queryParams, token) => {
     dispatch({
       type: actionTypes.RESET_MESSAGE,
     });
+
     dispatch({
       type: actionTypes.RESET_ARRAY,
     });
+
     try {
       const res = await axios.get(`/dashboard/products/?${qs.stringify(queryParams)}`, config);
       const data = res.data;
+
       dispatch({
         type: actionTypes.GET,
         payload: data,
@@ -41,7 +44,7 @@ export const get = (queryParams, token) => {
   };
 };
 
-export const getById = (id, token) => {
+export const getById = (token, id) => {
   const endpoint = `/dashboard/products/${id}`;
 
   const config = {
@@ -49,16 +52,20 @@ export const getById = (id, token) => {
       'Authorization': 'Bearer ' + token,
     },
   };
+
   return async dispatch => {
     dispatch({
       type: actionTypes.RESET_MESSAGE,
     });
+
     dispatch({
       type: actionTypes.RESET_SINGLE,
     });
+
     try {
       const res = await axios.get(endpoint, config);
       const data = res.data;
+
       dispatch({
         type: actionTypes.GET_BY_ID,
         payload: data.dataSingle,
@@ -80,7 +87,7 @@ export const getById = (id, token) => {
   };
 };
 
-export const post = (formData, token) => {
+export const post = (token, formData) => {
   const endpoint = '/dashboard/products/new';
 
   const config = {
@@ -95,9 +102,14 @@ export const post = (formData, token) => {
       type: actionTypes.RESET_MESSAGE,
     });
 
+    dispatch({
+      type: actionTypes.SAVING,
+    });
+
     try {
       const res = await axios.post(endpoint, formData, config);
       const data = res.data;
+
       dispatch({
         type: actionTypes.POST,
         payload: data.message,
@@ -115,11 +127,15 @@ export const post = (formData, token) => {
         type: actionTypes.GET_ERROR,
         payload,
       });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
+      });
     }
   };
 };
 
-export const put = (id, formData, token) => {
+export const put = (token, id, formData) => {
   const endpoint = `/dashboard/products/${id}`;
 
   const config = {
@@ -134,9 +150,14 @@ export const put = (id, formData, token) => {
       type: actionTypes.RESET_MESSAGE,
     });
 
+    dispatch({
+      type: actionTypes.SAVING,
+    });
+
     try {
       const res = await axios.put(endpoint, formData, config);
       const data = res.data;
+
       dispatch({
         type: actionTypes.PUT,
         payload: data,
@@ -154,11 +175,15 @@ export const put = (id, formData, token) => {
         type: actionTypes.GET_ERROR,
         payload,
       });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
+      });
     }
   };
 };
 
-export const remove = (id, queryParams, token) => {
+export const remove = (token, id, queryParams) => {
   const endpoint = `/dashboard/products/${id}`;
 
   const config = {
@@ -172,14 +197,22 @@ export const remove = (id, queryParams, token) => {
       type: actionTypes.RESET_MESSAGE_ONLY,
     });
 
+    dispatch({
+      type: actionTypes.REMOVING,
+    });
+
     try {
       const res = await axios.delete(endpoint, config);
       const data = res.data;
+
       dispatch({
         type: actionTypes.DELETE,
         payload: data.message,
       });
-      dispatch(get(queryParams, token));
+
+      if (queryParams) {
+        dispatch(get(token, queryParams));
+      }
     } catch (err) {
       let payload;
 
@@ -192,6 +225,10 @@ export const remove = (id, queryParams, token) => {
       dispatch({
         type: actionTypes.GET_ERROR,
         payload,
+      });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
       });
     }
   };
