@@ -1,9 +1,9 @@
 import axios from 'axios';
+import qs from 'qs';
 
-import clientActionTypes from './client-action-types';
+import actionTypes from './action-types';
 
-// GET
-export const getArr = (endpoint, token) => {
+export const get = (token, queryParams) => {
   const config = {
     headers: {
       'Authorization': 'Bearer ' + token,
@@ -12,18 +12,19 @@ export const getArr = (endpoint, token) => {
 
   return async dispatch => {
     dispatch({
-      type: clientActionTypes.RESET_CLIENT_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
     dispatch({
-      type: clientActionTypes.RESET_CLIENTS,
+      type: actionTypes.RESET_ARRAY,
     });
 
     try {
-      const res = await axios.get(endpoint, config);
+      const res = await axios.get(`/dashboard/clients/?${qs.stringify(queryParams)}`, config);
       const data = res.data;
 
       dispatch({
-        type: clientActionTypes.GET_CLIENTS,
+        type: actionTypes.GET,
         payload: data,
       });
     } catch (err) {
@@ -36,17 +37,15 @@ export const getArr = (endpoint, token) => {
       }
 
       dispatch({
-        type: clientActionTypes.GET_CLIENT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
 
-// DELETE
-
-export const delOne = (id, token) => {
-  const endpoint = `/admin/clients/${id}`;
+export const remove = (token, id, queryParams) => {
+  const endpoint = `/dashboard/clients/${id}`;
 
   const config = {
     headers: {
@@ -56,15 +55,25 @@ export const delOne = (id, token) => {
 
   return async dispatch => {
     dispatch({
-      type: clientActionTypes.RESET_CLIENT_MESSAGE_ONLY,
+      type: actionTypes.RESET_MESSAGE_ONLY,
     });
+
+    dispatch({
+      type: actionTypes.REMOVING,
+    });
+
     try {
       const res = await axios.delete(endpoint, config);
       const data = res.data;
+
       dispatch({
-        type: clientActionTypes.DELETE_CLIENT,
+        type: actionTypes.DELETE,
         payload: data.message,
       });
+
+      if (queryParams) {
+        dispatch(get(token, queryParams));
+      }
     } catch (err) {
       let payload;
 
@@ -75,8 +84,12 @@ export const delOne = (id, token) => {
       }
 
       dispatch({
-        type: clientActionTypes.GET_CLIENT_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
+      });
+
+      dispatch({
+        type: actionTypes.CUD_ERROR,
       });
     }
   };
