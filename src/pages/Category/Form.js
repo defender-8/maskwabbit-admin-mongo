@@ -1,57 +1,111 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { message } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getById, post, put, remove } from '../../redux/category/actions';
+
+import useUploadImage from '../../base/components/Upload/UploadImage/useUploadImage';
 
 import Layout from '../../App/Layout';
-import { Spin, Form, FormItem, Input, UploadImage } from '../../base/components';
+import {
+  Spin,
+  Empty,
+  GoBackButton,
+  Form,
+  FormItem,
+  Input,
+  UploadImage,
+  notification,
+} from '../../base/components';
 import { FormActions } from '../../components';
 
-import category, { getById, save, remove } from '../../modules/category';
-import useFeedbackEffect from '../../base/hooks/useFeedbackEffect';
-import useFeedbackCallback from '../../base/hooks/useFeedbackCallback';
-
-function CategoryForm({ history, match, getById, save, remove, data }) {
+function CategoryForm({ match, history }) {
   const { params: { id }, url } = match;
+
+  const { user: { token } } = useSelector(state => state.auth);
+  const { loading, saving, removing, errorMessage, cudError, successMessage, dataSingle } = useSelector(
+    state => state.category);
+
+  const dispatch = useDispatch();
+
   const [form] = Form.useForm();
 
-  const { loading: getLoading } = useFeedbackEffect(async () => {
+  const { onChange, imageLoading, imageUrl } = useUploadImage();
+
+  useEffect(() => {
     if (id) {
-      await getById(id);
+      dispatch(getById(token, id));
     }
-  }, [id, getById]);
+  }, [id]);
+
+  const setFormFieldsValueFromProps = () => {
+    if (dataSingle) {
+      const { title, image, description } = dataSingle;
+
+      form.setFieldsValue({
+        title,
+        image,
+        description
+      });
+    }
+  };
 
   useEffect(() => {
-    if (data) {
-      const {title, image, description} = data;
-      form.setFieldsValue({title, image, description});
-    };
-  }, [data]);
+    if (id) {
+      setFormFieldsValueFromProps();
+    }
+  }, [dataSingle]);
 
   useEffect(() => {
+    if (successMessage) {
+      notification(successMessage).success();
+    }
+  }, [successMessage]);
+
+  useEffect(() => {
+    const values = form.getFieldsValue();
+
+    if (errorMessage) {
+      notification(errorMessage).error();
+    }
+
+    form.setFieldsValue(values);
+  }, [errorMessage]);
+
+  const onFinish = async (values) => {
+    if (values.image.file) {
+      values.image = values.image.file.originFileObj;
+    }
+
+    const formData = new FormData();
+
+    Object.keys(values).forEach(key => formData.append(key, values[key]));
+
     if (!id) {
+      await dispatch(post(token, formData));
+
       form.resetFields();
-    };
-  }, []);
 
-  const { callback: onFinish, loading: saveLoading } = useFeedbackCallback(async (values) => {
-    if (id) {
-      values.id = id;
+    } else {
+      await dispatch(put(token, id, formData));
+
+      form.setFieldsValue(values);
     }
+  };
 
-    await save(values);
-    message.success('Successfully saved!');
-  }, [id, save]);
-
-  const {callback: deleteItem, loading: delLoading} = useFeedbackCallback(async () => {
-    await remove(id, false);
-    message.success('Successfully removed!');
+  const deleteItem = async () => {
+    await dispatch(remove(token, id));
     history.replace(url.substring(0, url.indexOf(`/${id}`)));
-  }, [remove, id]);
+  };
 
   return (
     <Layout title={!id ? 'Add New Category' : 'Edit Category'}>
       {
-        getLoading ? (<Spin />) : (
+        loading ?
+          <Spin /> : errorMessage && !cudError ?
+          <>
+            <GoBackButton />
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </> :
           <Form
             form={form}
             layout="vertical"
@@ -60,8 +114,8 @@ function CategoryForm({ history, match, getById, save, remove, data }) {
             <FormActions
               deleteItem={deleteItem}
               isItemNew={!id}
-              saveLoading={saveLoading}
-              delLoading={delLoading}
+              saving={saving}
+              removing={removing}
             />
             <div className="container-sm">
               <FormItem
@@ -76,7 +130,12 @@ function CategoryForm({ history, match, getById, save, remove, data }) {
                 label="Image:"
                 rules={[{ required: true }]}
               >
-                <UploadImage />
+                <UploadImage
+                  token={token}
+                  onChange={onChange}
+                  imageLoading={imageLoading}
+                  imageUrl={imageUrl}
+                />
               </FormItem>
               <FormItem
                 name="description"
@@ -87,12 +146,9 @@ function CategoryForm({ history, match, getById, save, remove, data }) {
               </FormItem>
             </div>
           </Form>
-        )
       }
     </Layout>
   );
 }
 
-export default connect(state => ({
-  data: state[category.name].data,
-}), {getById, save, remove})(CategoryForm);
+export default CategoryForm;
