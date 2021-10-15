@@ -19,8 +19,8 @@ import { ArrayHeader, DeleteItem } from '../../components';
 
 function ProductTable({ history, match }) {
   const { user: { token } } = useSelector(state => state.auth);
-  const { dataArray: allCategories } = useSelector(state => state.category);
-  const { loading, removing, errorMessage, dataArray, total } = useSelector(state => state.product);
+  const { dataArr: allCategories } = useSelector(state => state.category);
+  const { loading, removing, errorMessage, successMessage, dataArr, total } = useSelector(state => state.product);
 
   const dispatch = useDispatch();
 
@@ -111,7 +111,11 @@ function ProductTable({ history, match }) {
     if (errorMessage) {
       notification(errorMessage).error();
     }
-  }, [errorMessage]);
+
+    if (successMessage) {
+      notification(successMessage).success();
+    }
+  }, [errorMessage, successMessage]);
 
   const onDelete = async (record) => {
     await dispatch(remove(token, record._id, queryParams));
@@ -171,7 +175,7 @@ function ProductTable({ history, match }) {
           indicator: <Spin />,
         }}
         rowKey="id"
-        dataSource={dataArray}
+        dataSource={dataArr}
         columns={columns}
         onChange={onChange}
         onRow={onRow}

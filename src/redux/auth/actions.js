@@ -1,18 +1,19 @@
 import axios from 'axios';
 
-import authActionTypes from './auth-action-types';
+import actionTypes from './action-types';
 
 export const signIn = formData => {
   return async dispatch => {
     dispatch({
-      type: authActionTypes.RESET_AUTH_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
     try {
       const res = await axios.post('/dashboard/auth/sign-in', formData);
       const data = res.data;
 
       dispatch({
-        type: authActionTypes.SIGN_IN,
+        type: actionTypes.SIGN_IN,
         payload: data,
       });
     } catch (err) {
@@ -25,7 +26,7 @@ export const signIn = formData => {
       }
 
       dispatch({
-        type: authActionTypes.GET_AUTH_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
@@ -35,22 +36,27 @@ export const signIn = formData => {
 export const logOut = () => {
   return async dispatch => {
     dispatch({
-      type: authActionTypes.LOG_OUT,
-      payload: null,
+      type: actionTypes.RESET_MESSAGE,
+    });
+
+    dispatch({
+      type: actionTypes.LOG_OUT,
     });
   };
 };
 
-export const postResetPassword = formData => {
+export const resetPassword = formData => {
   return async dispatch => {
     dispatch({
-      type: authActionTypes.RESET_AUTH_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
     try {
       const res = await axios.post('/dashboard/auth/password-reset', formData);
       const data = res.data;
+
       dispatch({
-        type: authActionTypes.POST_RESET_PASSWORD,
+        type: actionTypes.RESET_PASSWORD,
         payload: data,
       });
     } catch (err) {
@@ -63,23 +69,25 @@ export const postResetPassword = formData => {
       }
 
       dispatch({
-        type: authActionTypes.GET_AUTH_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }
   };
 };
 
-export const postNewPassword = (endpoint, formData) => {
+export const changePassword = (endpoint, formData) => {
   return async dispatch => {
     dispatch({
-      type: authActionTypes.RESET_AUTH_MESSAGE,
+      type: actionTypes.RESET_MESSAGE,
     });
+
     try {
       const res = await axios.post(endpoint, formData);
       const data = res.data;
+
       dispatch({
-        type: authActionTypes.POST_NEW_PASSWORD,
+        type: actionTypes.CHANGE_PASSWORD,
         payload: data.message,
       });
     } catch (err) {
@@ -92,7 +100,7 @@ export const postNewPassword = (endpoint, formData) => {
       }
 
       dispatch({
-        type: authActionTypes.GET_AUTH_ERROR,
+        type: actionTypes.GET_ERROR,
         payload,
       });
     }

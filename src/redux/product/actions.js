@@ -12,11 +12,7 @@ export const get = (token, queryParams) => {
 
   return async dispatch => {
     dispatch({
-      type: actionTypes.RESET_MESSAGE,
-    });
-
-    dispatch({
-      type: actionTypes.RESET_ARRAY,
+      type: actionTypes.RESET,
     });
 
     try {
@@ -31,9 +27,15 @@ export const get = (token, queryParams) => {
       let payload;
 
       if (err.response.data.message) {
-        payload = err.response.data.message;
+        payload = {
+          message: err.response.data.message,
+          isGetError: true,
+        };
       } else {
-        payload = err.message;
+        payload = {
+          message: err.message,
+          isGetError: true,
+        };
       }
 
       dispatch({
@@ -55,11 +57,7 @@ export const getById = (token, id) => {
 
   return async dispatch => {
     dispatch({
-      type: actionTypes.RESET_MESSAGE,
-    });
-
-    dispatch({
-      type: actionTypes.RESET_SINGLE,
+      type: actionTypes.RESET,
     });
 
     try {
@@ -74,9 +72,15 @@ export const getById = (token, id) => {
       let payload;
 
       if (err.response.data.message) {
-        payload = err.response.data.message;
+        payload = {
+          message: err.response.data.message,
+          isGetError: true,
+        };
       } else {
-        payload = err.message;
+        payload = {
+          message: err.message,
+          isGetError: true,
+        };
       }
 
       dispatch({
@@ -98,10 +102,6 @@ export const post = (token, formData) => {
   };
 
   return async dispatch => {
-    dispatch({
-      type: actionTypes.RESET_MESSAGE,
-    });
-
     dispatch({
       type: actionTypes.SAVING,
     });
@@ -127,10 +127,6 @@ export const post = (token, formData) => {
         type: actionTypes.GET_ERROR,
         payload,
       });
-
-      dispatch({
-        type: actionTypes.CUD_ERROR,
-      });
     }
   };
 };
@@ -146,10 +142,6 @@ export const put = (token, id, formData) => {
   };
 
   return async dispatch => {
-    dispatch({
-      type: actionTypes.RESET_MESSAGE,
-    });
-
     dispatch({
       type: actionTypes.SAVING,
     });
@@ -175,10 +167,6 @@ export const put = (token, id, formData) => {
         type: actionTypes.GET_ERROR,
         payload,
       });
-
-      dispatch({
-        type: actionTypes.CUD_ERROR,
-      });
     }
   };
 };
@@ -193,10 +181,6 @@ export const remove = (token, id, queryParams) => {
   };
 
   return async dispatch => {
-    dispatch({
-      type: actionTypes.RESET_MESSAGE_ONLY,
-    });
-
     dispatch({
       type: actionTypes.REMOVING,
     });
@@ -225,10 +209,6 @@ export const remove = (token, id, queryParams) => {
       dispatch({
         type: actionTypes.GET_ERROR,
         payload,
-      });
-
-      dispatch({
-        type: actionTypes.CUD_ERROR,
       });
     }
   };

@@ -1,47 +1,55 @@
-import authActionTypes from './auth-action-types';
+import actionTypes from './action-types';
 
 const initialState = {
+  loading: false,
   user: null,
   userToResetPassId: null,
   successMessage: null,
   errorMessage: null,
 };
 
-function authReducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case authActionTypes.RESET_AUTH_MESSAGE :
+    case actionTypes.RESET_MESSAGE :
       return {
         ...state,
+        loading: true,
         successMessage: null,
         errorMessage: null,
       };
-    case authActionTypes.SIGN_IN:
+    case actionTypes.SIGN_IN:
       return {
         ...state,
-        user: payload,
+        loading: false,
+        user: payload.user,
+        successMessage: payload.message,
       };
-    case authActionTypes.LOG_OUT:
+    case actionTypes.LOG_OUT:
       return {
         ...state,
-        user: payload,
+        loading: false,
+        user: null,
       };
-    case authActionTypes.POST_RESET_PASSWORD:
+    case actionTypes.RESET_PASSWORD:
       return {
         ...state,
+        loading: false,
         userToResetPassId: payload.userId,
         successMessage: payload.message,
       };
-    case authActionTypes.POST_NEW_PASSWORD:
+    case actionTypes.CHANGE_PASSWORD:
       return {
         ...state,
+        loading: false,
         userToResetPassId: null,
         successMessage: payload,
       };
-    case authActionTypes.GET_AUTH_ERROR :
+    case actionTypes.GET_ERROR :
       return {
         ...state,
+        loading: false,
         errorMessage: payload,
       };
     default:
@@ -49,4 +57,4 @@ function authReducer(state = initialState, action) {
   }
 }
 
-export default authReducer;
+export default reducer;

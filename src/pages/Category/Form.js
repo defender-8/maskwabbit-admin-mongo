@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getById, post, put, remove } from '../../redux/category/actions';
 
+import { useDidUpdateEffect } from '../../base/hooks';
 import useUploadImage from '../../base/components/Upload/UploadImage/useUploadImage';
 
 import Layout from '../../App/Layout';
@@ -22,7 +23,7 @@ function CategoryForm({ match, history }) {
   const { params: { id }, url } = match;
 
   const { user: { token } } = useSelector(state => state.auth);
-  const { loading, saving, removing, errorMessage, cudError, successMessage, dataSingle } = useSelector(
+  const { loading, saving, removing, getError, errorMessage, successMessage, dataSingle } = useSelector(
     state => state.category);
 
   const dispatch = useDispatch();
@@ -55,21 +56,19 @@ function CategoryForm({ match, history }) {
     }
   }, [dataSingle]);
 
-  useEffect(() => {
-    if (successMessage) {
-      notification(successMessage).success();
-    }
-  }, [successMessage]);
-
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     const values = form.getFieldsValue();
 
     if (errorMessage) {
       notification(errorMessage).error();
+
+      form.setFieldsValue(values);
     }
 
-    form.setFieldsValue(values);
-  }, [errorMessage]);
+    if (successMessage) {
+      notification(successMessage).success();
+    }
+  }, [errorMessage, successMessage]);
 
   const onFinish = async (values) => {
     if (values.image.file) {
@@ -101,7 +100,7 @@ function CategoryForm({ match, history }) {
     <Layout title={!id ? 'Add New Category' : 'Edit Category'}>
       {
         loading ?
-          <Spin /> : errorMessage && !cudError ?
+          <Spin /> : getError ?
           <>
             <GoBackButton />
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

@@ -1,36 +1,29 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  selectCurrentUser,
-} from '../../../redux/auth/auth-selectors';
-import { postChangePassword } from '../../../redux/admin/admin-actions';
+import { changePassword } from '../../../redux/admin/actions';
 
-import Form from '../../../components/Form/Form';
-import FormItem from '../../../components/Form/FormItem';
-import InputPassword from '../../../components/Form/Input/InputPassword';
-import Button from '../../../components/Button/Button';
+import { Form, FormItem, InputPassword, Button } from '../../../base/components';
 
-function ChangePassForm({ postChangePassword, currentUser, user, setFormFieldsValue, onFinishMessage, handleOk }) {
-  const [loading, setLoading] = useState(false);
+function ChangePassForm({ userId, handleOk }) {
+  const { user: { token } } = useSelector(state => state.auth);
+  const { saving } = useSelector(state => state.admin);
 
-  const toggleLoading = () => setLoading(loading => !loading);
+  const [form] = Form.useForm();
+
+  const dispatch = useDispatch();
 
   const onFinish = async values => {
-    toggleLoading();
+    values.userId = userId;
 
-    values.userId = user._id;
-
-    await postChangePassword(values, currentUser.token);
-    toggleLoading();
-
-    setFormFieldsValue();
-    onFinishMessage(handleOk);
+    await dispatch(changePassword(token, values));
+    form.resetFields();
+    handleOk();
   };
 
   return (
     <Form
+      form={form}
       layout="vertical"
       onFinish={onFinish}
     >
@@ -61,7 +54,7 @@ function ChangePassForm({ postChangePassword, currentUser, user, setFormFieldsVa
           block
           htmlType="submit"
           className="mt-2"
-          loading={loading}
+          loading={saving}
         >
           Save
         </Button>
@@ -70,12 +63,4 @@ function ChangePassForm({ postChangePassword, currentUser, user, setFormFieldsVa
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  postChangePassword: (data, token) => dispatch(postChangePassword(data, token)),
-});
-
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChangePassForm);
+export default ChangePassForm;

@@ -9,7 +9,7 @@ const { Option } = Select;
 
 function SelectCategory({ onChange, value }) {
   const { user: { token } } = useSelector(state => state.auth);
-  const { dataArray } = useSelector(state => state.category);
+  const { dataArr } = useSelector(state => state.category);
 
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ function SelectCategory({ onChange, value }) {
   return (
     <Select mode="multiple" value={value} onChange={onChange}>
       {
-        dataArray.map(c => <Option key={c._id} value={c._id}>{c.title}</Option>)
+        dataArr?.map(c => <Option key={c._id} value={c._id}>{c.title}</Option>)
       }
     </Select>
   );

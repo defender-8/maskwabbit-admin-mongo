@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import authReducer from './auth/auth-reducer';
+import authReducer from './auth/reducer';
 import adminReducer from './admin/reducer';
 import clientReducer from './client/reducer';
 import productReducer from './product/reducer';

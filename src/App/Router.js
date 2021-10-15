@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import AuthRouter from '../pages/Auth/';
@@ -12,7 +11,7 @@ import CategoryRouter from '../pages/Category';
 // import OrderRouter from '../pages/Order/OrderRouter';
 
 function Router() {
-  const user = useSelector(state => state.auth.user);
+  const { user } = useSelector(state => state.auth);
 
   const protectedRoute = (exact, path, component) => {
     return (

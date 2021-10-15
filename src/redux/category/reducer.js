@@ -1,65 +1,48 @@
 import actionTypes from './action-types';
 
 const initialState = {
+  dataArr: null,
+  total: null,
   loading: true,
+  dataSingle: null,
   saving: false,
   removing: false,
-  dataArray: [],
-  total: null,
-  dataSingle: null,
-  successMessage: null,
+  getError: false,
   errorMessage: null,
-  cudError: false,
+  successMessage: null,
 };
 
 function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.RESET_MESSAGE :
+    case actionTypes.RESET :
       return {
         ...state,
         loading: true,
+        getError: false,
         successMessage: null,
         errorMessage: null,
-      };
-    case actionTypes.RESET_MESSAGE_ONLY :
-      return {
-        ...state,
-        errorMessage: null,
-        successMessage: null,
-      };
-    case actionTypes.RESET_ARRAY :
-      return {
-        ...state,
-        loading: true,
-        dataArray: [],
-      };
-    case actionTypes.RESET_SINGLE :
-      return {
-        ...state,
-        loading: true,
-        dataSingle: null,
       };
     case actionTypes.GET :
       return {
         ...state,
         loading: false,
-        dataArray: payload.dataArray,
+        dataArr: payload.dataArr,
         total: payload.total,
       };
     case actionTypes.GET_BY_ID :
       return {
         ...state,
         loading: false,
-        cudError: false,
         dataSingle: payload,
       };
     case actionTypes.SAVING :
       return {
         ...state,
-        loading: false,
         saving: true,
+        successMessage: null,
+        errorMessage: null,
       };
     case actionTypes.POST :
       return {
@@ -78,6 +61,8 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         removing: true,
+        successMessage: null,
+        errorMessage: null,
       };
     case actionTypes.DELETE :
       return {
@@ -89,14 +74,10 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        errorMessage: payload,
-      };
-    case actionTypes.CUD_ERROR :
-      return {
-        ...state,
         saving: false,
         removing: false,
-        cudError: true,
+        getError: payload.isGetError,
+        errorMessage: payload.message || payload,
       };
     default :
       return state;

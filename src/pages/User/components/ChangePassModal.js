@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Modal from '../../../components/Modal/Modal';
+import { Modal } from '../../../base/components';
 import ChangePassForm from './ChangePassForm';
 
-function ChangePassModal({ setFormFieldsValue, onFinishMessage, user }) {
+function ChangePassModal({ userId }) {
   const currentModalProps = {
     width: 480,
     title: 'Change Password',
@@ -17,9 +17,7 @@ function ChangePassModal({ setFormFieldsValue, onFinishMessage, user }) {
 
   const modalContent = (handleOk) =>
     <ChangePassForm
-      setFormFieldsValue={setFormFieldsValue}
-      onFinishMessage={onFinishMessage}
-      user={user}
+      userId={userId}
       handleOk={handleOk}
     />;
 

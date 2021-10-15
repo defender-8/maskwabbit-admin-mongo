@@ -15,7 +15,7 @@ import { ArrayHeader, DeleteItem } from '../../components';
 
 function CategoryTable({ history, match }) {
   const { user: { token } } = useSelector(state => state.auth);
-  const { loading, removing, errorMessage, dataArray, total } = useSelector(state => state.category);
+  const { loading, removing, errorMessage, successMessage, dataArr, total } = useSelector(state => state.category);
 
   const dispatch = useDispatch();
 
@@ -74,7 +74,11 @@ function CategoryTable({ history, match }) {
     if (errorMessage) {
       notification(errorMessage).error();
     }
-  }, [errorMessage]);
+
+    if (successMessage) {
+      notification(successMessage).success();
+    }
+  }, [errorMessage, successMessage]);
 
   const onDelete = async (record) => {
     await dispatch(remove(token, record._id, queryParams));
@@ -134,7 +138,7 @@ function CategoryTable({ history, match }) {
           indicator: <Spin />,
         }}
         rowKey="id"
-        dataSource={dataArray}
+        dataSource={dataArr}
         columns={columns}
         onChange={onChange}
         onRow={onRow}

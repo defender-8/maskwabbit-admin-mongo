@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SignIn from './SignIn';
-import PassResetEmailForm from './PassResetEmailForm';
-import PassResetPassForm from './PassResetPassForm';
+// import PassResetEmailForm from './PassResetEmailForm';
+// import PassResetPassForm from './PassResetPassForm';
 
 function AuthRouter({ user }) {
   return (
@@ -19,8 +19,8 @@ function AuthRouter({ user }) {
           /> :
           <Route exact path="/auth/sign-in" component={SignIn} />
       }
-      <Route exact path="/auth/password-reset" component={PassResetEmailForm} />
-      <Route exact path="/auth/password-reset/:token" component={PassResetPassForm} />
+      {/*<Route exact path="/auth/password-reset" component={PassResetEmailForm} />*/}
+      {/*<Route exact path="/auth/password-reset/:token" component={PassResetPassForm} />*/}
       <Redirect to="/auth/sign-in" />
     </Switch>
   );

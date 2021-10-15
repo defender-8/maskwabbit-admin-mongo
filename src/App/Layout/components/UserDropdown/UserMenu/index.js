@@ -1,26 +1,29 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import {
   ProfileOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import {
-  selectUser,
-} from '../../../../../redux/auth/auth-selectors';
-import { logOut } from '../../../../../redux/auth/auth-actions';
+import { logOut } from '../../../../../redux/auth/actions';
 
 import { Menu } from '../../../../../base/components';
 
 import './index.less';
 
-function UserMenu({ user, signOut }) {
+
+function UserMenu() {
   const { url } = useRouteMatch();
 
+  const { user } = useSelector(state => state.auth);
+
+  const dispatch = useDispatch();
+
   const profileLink = (user.role === 'super admin') ?
-    `/super-admins/${user.id}` : `/admins/${user.id}`;
+    `/super-admins/${user._id}` : `/admins/${user._id}`;
+
+  const signOut = () => dispatch(logOut());
 
   return (
     <Menu className="UserMenu" selectedKeys={[url]}>
@@ -41,12 +44,4 @@ function UserMenu({ user, signOut }) {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  logOut: () => dispatch(logOut()),
-});
-
-const mapStateToProps = createStructuredSelector({
-  user: selectUser,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+export default UserMenu;

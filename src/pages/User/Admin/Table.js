@@ -15,7 +15,7 @@ import { ArrayHeader, DeleteItem } from '../../../components';
 
 function AdminTable({ history, match, role }) {
   const { user: { token } } = useSelector(state => state.auth);
-  const { loading, removing, errorMessage, dataArray, total } = useSelector(state => state.admin);
+  const { loading, removing, errorMessage, successMessage, dataArr, total } = useSelector(state => state.admin);
 
   const dispatch = useDispatch();
 
@@ -75,7 +75,11 @@ function AdminTable({ history, match, role }) {
     if (errorMessage) {
       notification(errorMessage).error();
     }
-  }, [errorMessage]);
+
+    if (successMessage) {
+      notification(successMessage).success();
+    }
+  }, [errorMessage, successMessage]);
 
   const onDelete = async (record) => {
     await dispatch(remove(token, record._id, queryParams));
@@ -135,7 +139,7 @@ function AdminTable({ history, match, role }) {
           indicator: <Spin />,
         }}
         rowKey="id"
-        dataSource={dataArray}
+        dataSource={dataArr}
         columns={columns}
         onChange={onChange}
         onRow={onRow}

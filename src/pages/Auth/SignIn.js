@@ -1,88 +1,87 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { signIn } from '../../redux/auth/auth-actions';
+import { signIn } from '../../redux/auth/actions';
+
 import {
-  selectErrorMessage,
-} from '../../redux/auth/auth-selectors';
-
-import { Button, Form, FormItem, Input, InputPassword, message } from '../../base/components';
+  Form,
+  FormItem,
+  Input,
+  InputPassword,
+  Button,
+  notification,
+} from '../../base/components';
 import Layout from './Layout';
 
-class SignIn extends Component {
-  state = {
-    loading: false,
-  };
+function SignIn({ history }) {
+  const { loading, errorMessage, successMessage } = useSelector(state => state.auth);
 
-  toggleLoading = () => this.setState({ loading: !this.state.loading });
+  const dispatch = useDispatch();
 
-  onFinish = async values => {
-    this.toggleLoading();
+  const [form] = Form.useForm();
 
-    const { signIn, history } = this.props;
+  useEffect(() => {
+    const values = form.getFieldsValue();
 
-    await signIn(values);
-    this.toggleLoading();
+    if (errorMessage) {
+      notification(errorMessage).error();
 
-    const { errorMessage } = this.props;
-    if (!errorMessage) {
-      history.replace('/');
-    } else {
-      message.error(errorMessage);
+      form.setFieldsValue(values);
     }
+
+    if (successMessage) {
+      notification(successMessage).success();
+
+      history.replace('/');
+    }
+  }, [errorMessage, successMessage]);
+
+  const onFinish = async values => {
+    await dispatch(signIn(values));
   };
 
-  render() {
-    const { loading } = this.state;
-
-    return (
-      <Layout>
-        <Form
-          layout="vertical"
-          onFinish={this.onFinish}
+  return (
+    <Layout>
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+      >
+        <FormItem
+          name="email"
+          label="Email"
+          rules={[
+            { required: true },
+            { type: 'email' },
+          ]}
         >
-          <FormItem
-            name="email"
-            label="Email"
-            rules={[{ required: true }]}
+          <Input />
+        </FormItem>
+        <FormItem
+          name="password"
+          label="Password"
+          rules={[{ required: true }]}
+        >
+          <InputPassword />
+        </FormItem>
+        <FormItem>
+          <Button
+            type="primary"
+            block
+            htmlType="submit"
+            className="mt-2"
+            loading={loading}
           >
-            <Input />
-          </FormItem>
-          <FormItem
-            name="password"
-            label="Password"
-            rules={[{ required: true }]}
-          >
-            <InputPassword />
-          </FormItem>
-          <FormItem>
-            <Button
-              type="primary"
-              block
-              htmlType="submit"
-              className="mt-2"
-              loading={loading}
-            >
-              Sign In
-            </Button>
-          </FormItem>
-        </Form>
-        <div className="mt-2 text-center">
-          <Link to="/auth/password-reset">Forgot your password?</Link>
-        </div>
-      </Layout>
-    );
-  }
+            Sign In
+          </Button>
+        </FormItem>
+      </Form>
+      <div className="mt-2 text-center">
+        <Link to="/auth/password-reset">Forgot your password?</Link>
+      </div>
+    </Layout>
+  );
 }
 
-const mapDispatchToProps = dispatch => ({
-  signIn: (data) => dispatch(signIn(data)),
-});
-
-const mapStateToProps = createStructuredSelector({
-  errorMessage: selectErrorMessage,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;

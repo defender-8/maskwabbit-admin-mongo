@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getById, post, put, remove } from '../../../redux/admin/actions';
 
+import { useDidUpdateEffect } from '../../../base/hooks';
+
 import Layout from '../../../App/Layout';
 import {
   Spin,
@@ -15,12 +17,13 @@ import {
   notification,
 } from '../../../base/components';
 import { FormActions } from '../../../components';
+import ChangePassModal from '../components/ChangePassModal';
 
 function AdminForm({ match, history }) {
   const { params: { id }, url } = match;
 
   const { user: { token } } = useSelector(state => state.auth);
-  const { loading, saving, removing, errorMessage, cudError, successMessage, dataSingle } = useSelector(
+  const { loading, saving, removing, getError, errorMessage, successMessage, dataSingle } = useSelector(
     state => state.admin);
 
   const dispatch = useDispatch();
@@ -51,21 +54,19 @@ function AdminForm({ match, history }) {
     }
   }, [dataSingle]);
 
-  useEffect(() => {
-    if (successMessage) {
-      notification(successMessage).success();
-    }
-  }, [successMessage]);
-
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     const values = form.getFieldsValue();
 
     if (errorMessage) {
       notification(errorMessage).error();
+
+      form.setFieldsValue(values);
     }
 
-    form.setFieldsValue(values);
-  }, [errorMessage]);
+    if (successMessage) {
+      notification(successMessage).success();
+    }
+  }, [errorMessage, successMessage]);
 
   const onFinish = async (values) => {
     if (!id) {
@@ -89,7 +90,7 @@ function AdminForm({ match, history }) {
     <Layout title={!id ? 'Add New User' : 'Edit User'}>
       {
         loading ?
-          <Spin /> : errorMessage && !cudError ?
+          <Spin /> : getError ?
           <>
             <GoBackButton />
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -149,6 +150,7 @@ function AdminForm({ match, history }) {
                     </FormItem>
                   </> : null
               }
+              <ChangePassModal userId={id} />
             </div>
           </Form>
       }

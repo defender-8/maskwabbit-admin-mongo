@@ -12,11 +12,7 @@ export const get = (token, queryParams) => {
 
   return async dispatch => {
     dispatch({
-      type: actionTypes.RESET_MESSAGE,
-    });
-
-    dispatch({
-      type: actionTypes.RESET_ARRAY,
+      type: actionTypes.RESET,
     });
 
     try {
@@ -31,9 +27,15 @@ export const get = (token, queryParams) => {
       let payload;
 
       if (err.response.data.message) {
-        payload = err.response.data.message;
+        payload = {
+          message: err.response.data.message,
+          isGetError: true,
+        };
       } else {
-        payload = err.message;
+        payload = {
+          message: err.message,
+          isGetError: true,
+        };
       }
 
       dispatch({
@@ -54,10 +56,6 @@ export const remove = (token, id, queryParams) => {
   };
 
   return async dispatch => {
-    dispatch({
-      type: actionTypes.RESET_MESSAGE_ONLY,
-    });
-
     dispatch({
       type: actionTypes.REMOVING,
     });
@@ -86,10 +84,6 @@ export const remove = (token, id, queryParams) => {
       dispatch({
         type: actionTypes.GET_ERROR,
         payload,
-      });
-
-      dispatch({
-        type: actionTypes.CUD_ERROR,
       });
     }
   };
