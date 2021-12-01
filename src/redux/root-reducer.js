@@ -3,10 +3,10 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from './auth/reducer';
-import adminReducer from './admin/reducer';
+import adminReducer from './modules/admin';
 import clientReducer from './client/reducer';
-import productReducer from './product/reducer';
-import categoryReducer from './category/reducer';
+import productReducer from './modules/product';
+import categoryReducer from './modules/category';
 import orderReducer from './order/order-reducer';
 
 const persistConfig = {

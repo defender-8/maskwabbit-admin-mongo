@@ -6,8 +6,8 @@ import {
 } from '@ant-design/icons';
 import moment from 'moment';
 
-import { get, remove } from '../../redux/product/actions';
-import { get as getCategories } from '../../redux/category/actions';
+import { get, remove } from '../../redux/modules/product';
+import { get as getCategories } from '../../redux/modules/category';
 
 import { stopPropagation } from '../../base/utils/event';
 

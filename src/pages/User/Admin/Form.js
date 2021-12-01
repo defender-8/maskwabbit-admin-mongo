@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getById, post, put, remove } from '../../../redux/admin/actions';
+import { getById, post, put, remove } from '../../../redux/modules/admin';
 
 import { useDidUpdateEffect } from '../../../base/hooks';
 
@@ -150,7 +150,9 @@ function AdminForm({ match, history }) {
                     </FormItem>
                   </> : null
               }
-              <ChangePassModal userId={id} />
+              {
+                id ? (<ChangePassModal userId={id} />) : null
+              }
             </div>
           </Form>
       }

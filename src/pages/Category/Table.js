@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import moment from 'moment';
 
-import { get, remove } from '../../redux/category/actions';
+import { get, remove } from '../../redux/modules/category';
 
 import { useDidUpdateEffect } from '../../base/hooks';
 

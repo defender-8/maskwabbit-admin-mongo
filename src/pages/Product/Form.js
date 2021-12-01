@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getById, post, put, remove } from '../../redux/product/actions';
+import { getById, post, put, remove } from '../../redux/modules/product';
 
 import { useDidUpdateEffect } from '../../base/hooks';
 import useUploadImage from '../../base/components/Upload/UploadImage/useUploadImage';

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { get } from '../../../redux/category/actions';
+import { get } from '../../../redux/modules/category';
 
 import { Select } from '../../../base/components';
 

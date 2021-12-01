@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { changePassword } from '../../../redux/admin/actions';
+import { changePassword } from '../../../redux/modules/admin';
 
 import { Form, FormItem, InputPassword, Button } from '../../../base/components';
 
