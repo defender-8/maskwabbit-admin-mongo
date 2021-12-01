@@ -1,11 +1,11 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from "react";
 
-import Input from '../Input';
-import PassCodeItems from './components/PassCodeItems';
+import Input from "../Input";
+import PassCodeItems from "./components/PassCodeItems";
 
-import './index.less';
+import "./index.less";
 
-function PassCode({onChange, value}) {
+function PassCode({ onChange, value }) {
   const [focused, setFocused] = useState();
   const input = useRef();
 

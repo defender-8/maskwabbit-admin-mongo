@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
-import actionTypes from './action-types';
+import actionTypes from "./action-types";
 
-export const signIn = formData => {
-  return async dispatch => {
+export const signIn = (formData) => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET_MESSAGE,
     });
 
     try {
-      const res = await axios.post('/dashboard/auth/sign-in', formData);
+      const res = await axios.post("/dashboard/auth/sign-in", formData);
       const data = res.data;
 
       dispatch({
@@ -34,7 +34,7 @@ export const signIn = formData => {
 };
 
 export const logOut = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET_MESSAGE,
     });
@@ -45,14 +45,14 @@ export const logOut = () => {
   };
 };
 
-export const resetPassword = formData => {
-  return async dispatch => {
+export const resetPassword = (formData) => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET_MESSAGE,
     });
 
     try {
-      const res = await axios.post('/dashboard/auth/password-reset', formData);
+      const res = await axios.post("/dashboard/auth/password-reset", formData);
       const data = res.data;
 
       dispatch({
@@ -77,7 +77,7 @@ export const resetPassword = formData => {
 };
 
 export const changePassword = (endpoint, formData) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET_MESSAGE,
     });
@@ -106,4 +106,3 @@ export const changePassword = (endpoint, formData) => {
     }
   };
 };
-

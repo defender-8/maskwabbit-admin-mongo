@@ -1,5 +1,5 @@
-import axios from 'axios';
-import qs from 'qs';
+import axios from "axios";
+import qs from "qs";
 
 export const initialState = {
   dataArr: null,
@@ -14,15 +14,15 @@ export const initialState = {
 };
 
 export const actionTypes = {
-  RESET: 'RESET',
-  GET: 'GET',
-  GET_BY_ID: 'GET_BY_ID',
-  POST: 'POST',
-  PUT: 'PUT',
-  SAVING: 'SAVING',
-  DELETE: 'DELETE',
-  REMOVING: 'REMOVING',
-  GET_ERROR: 'GET_ERROR',
+  RESET: "RESET",
+  GET: "GET",
+  GET_BY_ID: "GET_BY_ID",
+  POST: "POST",
+  PUT: "PUT",
+  SAVING: "SAVING",
+  DELETE: "DELETE",
+  REMOVING: "REMOVING",
+  GET_ERROR: "GET_ERROR",
 };
 
 export default class Module {
@@ -47,19 +47,19 @@ export default class Module {
       moduleActionTypes[key] = `${this.moduleName}/${actionTypes[key]}`;
     }
 
-    return  moduleActionTypes;
-  };
+    return moduleActionTypes;
+  }
 
   get(token, queryParams) {
-    const endpoint = this.commonRoute + '?' + qs.stringify(queryParams);
+    const endpoint = this.commonRoute + "?" + qs.stringify(queryParams);
 
     const config = {
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 
-    return async dispatch => {
+    return async (dispatch) => {
       dispatch({
         type: this.actionTypes.RESET,
       });
@@ -100,11 +100,11 @@ export default class Module {
 
     const config = {
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 
-    return async dispatch => {
+    return async (dispatch) => {
       dispatch({
         type: this.actionTypes.RESET,
       });
@@ -138,22 +138,22 @@ export default class Module {
         });
       }
     };
-  };
+  }
 
   post(token, formData) {
-    const endpoint = this.commonRoute + 'new';
+    const endpoint = this.commonRoute + "new";
 
     const config = {
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 
     if (this.isMultipart) {
-      config['Content-Type'] = 'multipart/form-data';
+      config["Content-Type"] = "multipart/form-data";
     }
 
-    return async dispatch => {
+    return async (dispatch) => {
       dispatch({
         type: this.actionTypes.SAVING,
       });
@@ -181,22 +181,22 @@ export default class Module {
         });
       }
     };
-  };
+  }
 
   put(token, id, formData) {
     const endpoint = this.commonRoute + id;
 
     const config = {
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 
     if (this.isMultipart) {
-      config['Content-Type'] = 'multipart/form-data';
+      config["Content-Type"] = "multipart/form-data";
     }
 
-    return async dispatch => {
+    return async (dispatch) => {
       dispatch({
         type: this.actionTypes.SAVING,
       });
@@ -224,18 +224,18 @@ export default class Module {
         });
       }
     };
-  };
+  }
 
   remove(token, id, queryParams) {
     const endpoint = this.commonRoute + id;
 
     const config = {
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 
-    return async dispatch => {
+    return async (dispatch) => {
       dispatch({
         type: this.actionTypes.REMOVING,
       });
@@ -273,7 +273,7 @@ export default class Module {
     const { type, payload } = action;
 
     switch (type) {
-      case this.actionTypes.RESET :
+      case this.actionTypes.RESET:
         return {
           ...state,
           loading: true,
@@ -281,53 +281,53 @@ export default class Module {
           successMessage: null,
           errorMessage: null,
         };
-      case this.actionTypes.GET :
+      case this.actionTypes.GET:
         return {
           ...state,
           loading: false,
           dataArr: payload.dataArr,
           total: payload.total,
         };
-      case this.actionTypes.GET_BY_ID :
+      case this.actionTypes.GET_BY_ID:
         return {
           ...state,
           loading: false,
           dataSingle: payload,
         };
-      case this.actionTypes.SAVING :
+      case this.actionTypes.SAVING:
         return {
           ...state,
           saving: true,
           successMessage: null,
           errorMessage: null,
         };
-      case this.actionTypes.POST :
+      case this.actionTypes.POST:
         return {
           ...state,
           saving: false,
           successMessage: payload,
         };
-      case this.actionTypes.PUT :
+      case this.actionTypes.PUT:
         return {
           ...state,
           saving: false,
           dataSingle: payload.dataSingle,
           successMessage: payload.message,
         };
-      case this.actionTypes.REMOVING :
+      case this.actionTypes.REMOVING:
         return {
           ...state,
           removing: true,
           successMessage: null,
           errorMessage: null,
         };
-      case this.actionTypes.DELETE :
+      case this.actionTypes.DELETE:
         return {
           ...state,
           removing: false,
           successMessage: payload,
         };
-      case this.actionTypes.GET_ERROR :
+      case this.actionTypes.GET_ERROR:
         return {
           ...state,
           loading: false,
@@ -336,7 +336,7 @@ export default class Module {
           getError: payload.isGetError,
           errorMessage: payload.message || payload,
         };
-      default :
+      default:
         return state;
     }
   }

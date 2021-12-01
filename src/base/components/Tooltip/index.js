@@ -1,14 +1,11 @@
-import React from 'react';
-import AntTooltip from 'antd/es/tooltip/'
+import React from "react";
+import AntTooltip from "antd/es/tooltip/";
 
-import './index.less';
+import "./index.less";
 
-export default function Tooltip({children, ...props}) {
+export default function Tooltip({ children, ...props }) {
   return (
-    <AntTooltip
-      color="#fff"
-      {...props}
-    >
+    <AntTooltip color="#fff" {...props}>
       {children}
     </AntTooltip>
   );

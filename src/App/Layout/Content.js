@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { Layout } from '../../base/components';
+import { Layout } from "../../base/components";
 
 function Content({ children }) {
   return (
     <Layout.Content>
-      <div className="container">
-        {children}
-      </div>
+      <div className="container">{children}</div>
     </Layout.Content>
   );
 }

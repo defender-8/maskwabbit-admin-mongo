@@ -1,11 +1,11 @@
-import React from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
+import React from "react";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import { beforeImageUpload } from '../../../utils/file';
+import { beforeImageUpload } from "../../../utils/file";
 
-import Upload from '../index';
+import Upload from "../index";
 
-import cameraIcon from '../../../../assets/images/icons/camera.svg';
+import cameraIcon from "../../../../assets/images/icons/camera.svg";
 
 function UploadImage({ token, value, onChange, imageLoading, imageUrl }) {
   return (
@@ -17,24 +17,22 @@ function UploadImage({ token, value, onChange, imageLoading, imageUrl }) {
       action="/dashboard/upload"
       beforeUpload={beforeImageUpload}
       onChange={onChange}
-      headers={
-        { 'Authorization': 'Bearer ' + token }
-      }
+      headers={{ Authorization: "Bearer " + token }}
     >
-      {value?.length || (imageUrl && value !== undefined) ?
+      {value?.length || (imageUrl && value !== undefined) ? (
         <img
-          src={ imageUrl ? imageUrl : '/' + value}
+          src={imageUrl ? imageUrl : "/" + value}
           alt="avatar"
           style={{
-            maxHeight: '100%',
-            maxWidth: '100%',
-          }} />
-        : (
-          <div>
-            {imageLoading ? <LoadingOutlined /> : <img src={cameraIcon} alt="" />}
-          </div>
-        )
-      }
+            maxHeight: "100%",
+            maxWidth: "100%",
+          }}
+        />
+      ) : (
+        <div>
+          {imageLoading ? <LoadingOutlined /> : <img src={cameraIcon} alt="" />}
+        </div>
+      )}
     </Upload>
   );
 }

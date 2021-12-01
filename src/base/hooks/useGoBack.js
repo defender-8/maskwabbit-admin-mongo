@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 function useGoBack() {
   const history = useHistory();

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button, Popconfirm } from '../../base/components';
+import React from "react";
+import { Button, Popconfirm } from "../../base/components";
 
-function DeleteBtn({ deleteItem, removing}) {
+function DeleteBtn({ deleteItem, removing }) {
   const cancelDelete = (e) => {
     console.log(e);
   };
@@ -14,12 +14,7 @@ function DeleteBtn({ deleteItem, removing}) {
       okText="Yes"
       cancelText="Cancel"
     >
-      <Button
-        type="danger"
-        danger
-        loading={removing}
-        className="ml-2"
-      >
+      <Button type="danger" danger loading={removing} className="ml-2">
         Delete
       </Button>
     </Popconfirm>

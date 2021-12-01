@@ -1,22 +1,25 @@
-import axios from 'axios';
-import qs from 'qs';
+import axios from "axios";
+import qs from "qs";
 
-import actionTypes from './action-types';
+import actionTypes from "./action-types";
 
 export const get = (token, queryParams) => {
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET,
     });
 
     try {
-      const res = await axios.get(`/dashboard/products/?${qs.stringify(queryParams)}`, config);
+      const res = await axios.get(
+        `/dashboard/products/?${qs.stringify(queryParams)}`,
+        config
+      );
       const data = res.data;
 
       dispatch({
@@ -51,11 +54,11 @@ export const getById = (token, id) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET,
     });
@@ -92,16 +95,16 @@ export const getById = (token, id) => {
 };
 
 export const post = (token, formData) => {
-  const endpoint = '/dashboard/products/new';
+  const endpoint = "/dashboard/products/new";
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
+      Authorization: "Bearer " + token,
+      "Content-Type": "multipart/form-data",
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.SAVING,
     });
@@ -136,12 +139,12 @@ export const put = (token, id, formData) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
+      Authorization: "Bearer " + token,
+      "Content-Type": "multipart/form-data",
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.SAVING,
     });
@@ -176,11 +179,11 @@ export const remove = (token, id, queryParams) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.REMOVING,
     });

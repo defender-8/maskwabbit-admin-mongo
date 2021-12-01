@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import Avatar from '../../../components/Avatar/Avatar';
+import Avatar from "../../../components/Avatar/Avatar";
 
-import './OrderProdItem.scss';
+import "./OrderProdItem.scss";
 
 function OrderProdItem({ image, title, price, quantity, prodId }) {
   return (

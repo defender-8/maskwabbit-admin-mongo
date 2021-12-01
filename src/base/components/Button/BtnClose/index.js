@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { CloseIcon } from '../../../../assets/images/icons';
-import './index.less';
+import { CloseIcon } from "../../../../assets/images/icons";
+import "./index.less";
 
 export default function BtnClose() {
   return (

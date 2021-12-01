@@ -1,16 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import './index.less'
+import "./index.less";
 
 function SiderLayout({ children, siderContent }) {
   return (
     <div className="SiderLayout">
-      <div className="SiderLayout-sider">
-        {siderContent}
-      </div>
-      <div className="SiderLayout-content">
-        {children}
-      </div>
+      <div className="SiderLayout-sider">{siderContent}</div>
+      <div className="SiderLayout-content">{children}</div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import actionTypes from './action-types';
+import actionTypes from "./action-types";
 
 const initialState = {
   dataArr: null,
@@ -14,7 +14,7 @@ function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.RESET :
+    case actionTypes.RESET:
       return {
         ...state,
         loading: true,
@@ -22,27 +22,27 @@ function reducer(state = initialState, action) {
         successMessage: null,
         errorMessage: null,
       };
-    case actionTypes.GET :
+    case actionTypes.GET:
       return {
         ...state,
         loading: false,
         dataArr: payload.dataArr,
         total: payload.total,
       };
-    case actionTypes.REMOVING :
+    case actionTypes.REMOVING:
       return {
         ...state,
         removing: true,
         successMessage: null,
         errorMessage: null,
       };
-    case actionTypes.DELETE :
+    case actionTypes.DELETE:
       return {
         ...state,
         removing: false,
         successMessage: payload,
       };
-    case actionTypes.GET_ERROR :
+    case actionTypes.GET_ERROR:
       return {
         ...state,
         loading: false,
@@ -51,7 +51,7 @@ function reducer(state = initialState, action) {
         getError: payload.isGetError,
         errorMessage: payload.message || payload,
       };
-    default :
+    default:
       return state;
   }
 }

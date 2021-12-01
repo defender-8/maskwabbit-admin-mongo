@@ -1,14 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import {
-  DeleteFilled,
-} from '@ant-design/icons';
+import React, { useCallback, useState } from "react";
+import { DeleteFilled } from "@ant-design/icons";
 
-import { stopPropagation } from '../../base/utils/event';
+import { stopPropagation } from "../../base/utils/event";
 
-import { Popconfirm } from '../../base/components';
+import { Popconfirm } from "../../base/components";
 
 function DeleteItem({ onDelete, record, loading }) {
-
   const [visible, setVisible] = useState(false);
 
   const show = useCallback(() => {
@@ -19,10 +16,13 @@ function DeleteItem({ onDelete, record, loading }) {
     setVisible(false);
   }, [setVisible]);
 
-  const confirm = useCallback(async (e) => {
-    await onDelete(record);
-    hide();
-  }, [onDelete, record, hide]);
+  const confirm = useCallback(
+    async (e) => {
+      await onDelete(record);
+      hide();
+    },
+    [onDelete, record, hide]
+  );
 
   return (
     <div onClick={stopPropagation} className="d-inline-block">
@@ -32,7 +32,7 @@ function DeleteItem({ onDelete, record, loading }) {
         onConfirm={confirm}
         okText="Yes"
         cancelText="Cancel"
-        okButtonProps={{loading}}
+        okButtonProps={{ loading }}
         onCancel={hide}
       >
         <DeleteFilled onClick={show} />

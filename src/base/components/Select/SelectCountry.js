@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import SelectWithSearch from './SelectWithSearch';
+import SelectWithSearch from "./SelectWithSearch";
 
-import { countriesArr } from '../../data';
+import { countriesArr } from "../../data";
 
 function SelectCountry({ onChange, value }) {
   return (

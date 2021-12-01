@@ -1,13 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import Select from './index';
+import Select from "./index";
 
 const { Option } = Select;
 
 const filterOption = (input, option) =>
   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 
-export default function SelectWithSearch({ dataArr, defaultValue, onChange, value }) {
+export default function SelectWithSearch({
+  dataArr,
+  defaultValue,
+  onChange,
+  value,
+}) {
   return (
     <Select
       defaultValue={defaultValue}
@@ -17,11 +22,11 @@ export default function SelectWithSearch({ dataArr, defaultValue, onChange, valu
       onChange={onChange}
       value={value}
     >
-      {
-        dataArr.map(item =>
-          <Option key={item} value={item}>{item}</Option>,
-        )
-      }
+      {dataArr.map((item) => (
+        <Option key={item} value={item}>
+          {item}
+        </Option>
+      ))}
     </Select>
   );
 }

@@ -1,4 +1,4 @@
-import Table from 'antd/es/table';
-import './index.less';
+import Table from "antd/es/table";
+import "./index.less";
 
 export default Table;

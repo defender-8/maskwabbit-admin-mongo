@@ -1,17 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import {
-  DownOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import React from "react";
+import { useSelector } from "react-redux";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
-import { Dropdown } from '../../../../base/components';
-import UserMenu from './UserMenu';
+import { Dropdown } from "../../../../base/components";
+import UserMenu from "./UserMenu";
 
-import './index.less';
+import "./index.less";
 
 function UserDropdown() {
-  const { user } = useSelector(state => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <Dropdown overlay={<UserMenu />} className="UserDropdown">

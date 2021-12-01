@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { EditFilled } from "@ant-design/icons";
+import moment from "moment";
+
+import { get, remove } from "../../redux/modules/category";
+
+import { useDidUpdateEffect } from "../../base/hooks";
+
+import Layout from "../../App/Layout";
 import {
-  EditFilled,
-} from '@ant-design/icons';
-import moment from 'moment';
-
-import { get, remove } from '../../redux/modules/category';
-
-import { useDidUpdateEffect } from '../../base/hooks';
-
-import Layout from '../../App/Layout';
-import { Spin, Table, Pagination, Avatar, notification } from '../../base/components';
-import { ArrayHeader, DeleteItem } from '../../components';
+  Spin,
+  Table,
+  Pagination,
+  Avatar,
+  notification,
+} from "../../base/components";
+import { ArrayHeader, DeleteItem } from "../../components";
 
 function CategoryTable({ history, match }) {
-  const { user: { token } } = useSelector(state => state.auth);
-  const { loading, removing, errorMessage, successMessage, dataArr, total } = useSelector(state => state.category);
+  const {
+    user: { token },
+  } = useSelector((state) => state.auth);
+  const { loading, removing, errorMessage, successMessage, dataArr, total } =
+    useSelector((state) => state.category);
 
   const dispatch = useDispatch();
 
@@ -23,38 +30,33 @@ function CategoryTable({ history, match }) {
     current: 1,
     size: 10,
   });
-  const [search, setSearch] = useState('');
-  const [sorter, setSorter] = useState({ createdAt: 'desc' });
+  const [search, setSearch] = useState("");
+  const [sorter, setSorter] = useState({ createdAt: "desc" });
   const [filters, setFilters] = useState(null);
 
   const columns = [
     {
-      title: 'Image',
-      dataIndex: 'image',
-      key: 'image',
-      render: (image) => (
-        <Avatar
-          size="large"
-          src={'/' + image}
-        />
-      ),
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => <Avatar size="large" src={"/" + image} />,
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       sorter: () => null,
     },
     {
-      title: 'Created',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (createdAt) => moment(createdAt).format('MM/DD/YYYY'),
+      title: "Created",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => moment(createdAt).format("MM/DD/YYYY"),
       sorter: () => null,
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <>
           <EditFilled className="mr-2" />
@@ -64,7 +66,7 @@ function CategoryTable({ history, match }) {
     },
   ];
 
-  const queryParams = { page, sorter, filters, search }
+  const queryParams = { page, sorter, filters, search };
 
   useEffect(() => {
     dispatch(get(token, queryParams));
@@ -110,7 +112,7 @@ function CategoryTable({ history, match }) {
       });
     } else {
       setSorter({
-        createdAt: 'desc',
+        createdAt: "desc",
       });
     }
 
@@ -119,8 +121,8 @@ function CategoryTable({ history, match }) {
 
   const onRow = (record, index) => {
     return {
-      onClick: e => {
-        history.push(match.url + '/' + record._id);
+      onClick: (e) => {
+        history.push(match.url + "/" + record._id);
       },
     };
   };

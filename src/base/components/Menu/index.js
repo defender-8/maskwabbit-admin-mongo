@@ -1,5 +1,5 @@
-import Menu from 'antd/es/menu/';
+import Menu from "antd/es/menu/";
 
-import './index.less';
+import "./index.less";
 
 export default Menu;

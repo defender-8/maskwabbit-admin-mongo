@@ -1,19 +1,26 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { changePassword } from '../../../redux/modules/admin';
+import { changePassword } from "../../../redux/modules/admin";
 
-import { Form, FormItem, InputPassword, Button } from '../../../base/components';
+import {
+  Form,
+  FormItem,
+  InputPassword,
+  Button,
+} from "../../../base/components";
 
 function ChangePassForm({ userId, handleOk }) {
-  const { user: { token } } = useSelector(state => state.auth);
-  const { saving } = useSelector(state => state.admin);
+  const {
+    user: { token },
+  } = useSelector((state) => state.auth);
+  const { saving } = useSelector((state) => state.admin);
 
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
 
-  const onFinish = async values => {
+  const onFinish = async (values) => {
     values.userId = userId;
 
     await dispatch(changePassword(token, values));
@@ -22,11 +29,7 @@ function ChangePassForm({ userId, handleOk }) {
   };
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={onFinish}
-    >
+    <Form form={form} layout="vertical" onFinish={onFinish}>
       <FormItem
         name="currentPassword"
         label="Current Password"

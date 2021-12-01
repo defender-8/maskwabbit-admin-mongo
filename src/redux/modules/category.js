@@ -1,13 +1,12 @@
-import Module, { actionTypes } from '../Module';
+import Module, { actionTypes } from "../Module";
 
-const category = new Module('category', '/dashboard/categories/', actionTypes, true);
+const category = new Module(
+  "category",
+  "/dashboard/categories/",
+  actionTypes,
+  true
+);
 
-export const {
-  get,
-  getById,
-  post,
-  put,
-  remove,
-} = category;
+export const { get, getById, post, put, remove } = category;
 
 export default category.reducer;

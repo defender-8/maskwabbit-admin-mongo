@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Modal as AntModal } from 'antd';
+import React, { useState } from "react";
+import { Modal as AntModal } from "antd";
 
-import './index.less';
+import "./index.less";
 
 function Modal({ modalBtn, modalContent, modalCustomFooter, modalProps }) {
   const [visible, setVisible] = useState(false);

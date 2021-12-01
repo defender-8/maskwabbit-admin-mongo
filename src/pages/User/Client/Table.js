@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { EditFilled } from "@ant-design/icons";
+import moment from "moment";
+
+import { get, remove } from "../../../redux/client/actions";
+
+import { useDidUpdateEffect } from "../../../base/hooks";
+
+import Layout from "../../../App/Layout";
 import {
-  EditFilled,
-} from '@ant-design/icons';
-import moment from 'moment';
-
-import { get, remove } from '../../../redux/client/actions';
-
-import { useDidUpdateEffect } from '../../../base/hooks';
-
-import Layout from '../../../App/Layout';
-import { Spin, Table, Pagination, notification } from '../../../base/components';
-import { ArrayHeader, DeleteItem } from '../../../components';
+  Spin,
+  Table,
+  Pagination,
+  notification,
+} from "../../../base/components";
+import { ArrayHeader, DeleteItem } from "../../../components";
 
 function ClientTable({ history, match, role }) {
-  const { user: { token } } = useSelector(state => state.auth);
-  const { loading, removing, errorMessage, successMessage, dataArr, total } = useSelector(state => state.client);
+  const {
+    user: { token },
+  } = useSelector((state) => state.auth);
+  const { loading, removing, errorMessage, successMessage, dataArr, total } =
+    useSelector((state) => state.client);
 
   const dispatch = useDispatch();
 
@@ -23,39 +29,39 @@ function ClientTable({ history, match, role }) {
     current: 1,
     size: 10,
   });
-  const [search, setSearch] = useState('');
-  const [sorter, setSorter] = useState({ createdAt: 'desc' });
+  const [search, setSearch] = useState("");
+  const [sorter, setSorter] = useState({ createdAt: "desc" });
   const [filters, setFilters] = useState(null);
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'fullName',
-      key: 'fullName',
+      title: "Name",
+      dataIndex: "fullName",
+      key: "fullName",
       sorter: () => null,
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
       sorter: () => null,
     },
     {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
-      className: 'text-cap',
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      className: "text-cap",
     },
     {
-      title: 'Created',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (createdAt) => moment(createdAt).format('MM/DD/YYYY'),
+      title: "Created",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => moment(createdAt).format("MM/DD/YYYY"),
       sorter: () => null,
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <>
           <EditFilled className="mr-2" />
@@ -65,7 +71,7 @@ function ClientTable({ history, match, role }) {
     },
   ];
 
-  const queryParams = { page, sorter, filters, search, role }
+  const queryParams = { page, sorter, filters, search, role };
 
   useEffect(() => {
     dispatch(get(token, queryParams));
@@ -111,7 +117,7 @@ function ClientTable({ history, match, role }) {
       });
     } else {
       setSorter({
-        createdAt: 'desc',
+        createdAt: "desc",
       });
     }
 
@@ -120,8 +126,8 @@ function ClientTable({ history, match, role }) {
 
   const onRow = (record, index) => {
     return {
-      onClick: e => {
-        history.push(match.url + '/' + record._id);
+      onClick: (e) => {
+        history.push(match.url + "/" + record._id);
       },
     };
   };

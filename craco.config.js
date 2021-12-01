@@ -1,4 +1,4 @@
-const CracoLessPlugin = require('craco-less');
+const CracoLessPlugin = require("craco-less");
 
 module.exports = {
   plugins: [
@@ -8,11 +8,11 @@ module.exports = {
         lessLoaderOptions: {
           lessOptions: {
             modifyVars: {
-              '@primary-color': '#252525',
-              '@info-color': '#0091ff',
-              '@success-color': '#6fcf68',
-              '@warning-color': '#f7b500',
-              '@error-color': '#ff6a6a',
+              "@primary-color": "#252525",
+              "@info-color": "#0091ff",
+              "@success-color": "#6fcf68",
+              "@warning-color": "#f7b500",
+              "@error-color": "#ff6a6a",
             },
             javascriptEnabled: true,
           },
@@ -21,8 +21,6 @@ module.exports = {
     },
   ],
   babel: {
-    plugins: [
-      ['@babel/plugin-proposal-decorators', { legacy: true }],
-    ],
+    plugins: [["@babel/plugin-proposal-decorators", { legacy: true }]],
   },
 };

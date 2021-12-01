@@ -7,13 +7,13 @@
     font-weight: 600;
     padding: 7px 22px;
     border-radius: 8px;
-    transition: background-color .3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
     height: unset;
   }
 
   &:hover {
     color: @textColor;
-    border-color: rgba(0, 0, 0, .1);
+    border-color: rgba(0, 0, 0, 0.1);
   }
 
   &:disabled {
@@ -36,9 +36,10 @@
     border-color: @primary;
     color: @white;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: lighten(@primary, 5%);
-      border-color: lighten(@primary, 5%);;
+      border-color: lighten(@primary, 5%);
     }
   }
 
@@ -95,12 +96,14 @@
     font-weight: 600;
   }
 
-  &.btn-danger, &.ant-btn-danger {
+  &.btn-danger,
+  &.ant-btn-danger {
     color: @white;
     background-color: @danger;
     border-color: @danger;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: lighten(@danger, 5%);
       border-color: lighten(@danger, 5%);
       color: @white;
@@ -121,9 +124,10 @@
 
   &.btn-pre-danger {
     &:not(.btn-danger) {
-      transition: border-color .3s ease-in-out;
+      transition: border-color 0.3s ease-in-out;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         border-color: @danger;
       }
     }
@@ -134,7 +138,8 @@
     background-color: @success;
     border-color: @success;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: lighten(@success, 5%);
       border-color: lighten(@success, 5%);
     }
@@ -154,9 +159,10 @@
 
   &.btn-pre-success {
     &:not(.btn-success) {
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         border-color: @success;
       }
     }
@@ -192,7 +198,8 @@
     padding-bottom: 10px;
     border-color: transparent;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: #4285f4;
       border-color: transparent;
     }

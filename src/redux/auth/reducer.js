@@ -1,4 +1,4 @@
-import actionTypes from './action-types';
+import actionTypes from "./action-types";
 
 const initialState = {
   loading: false,
@@ -12,7 +12,7 @@ function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.RESET_MESSAGE :
+    case actionTypes.RESET_MESSAGE:
       return {
         ...state,
         loading: true,
@@ -46,7 +46,7 @@ function reducer(state = initialState, action) {
         userToResetPassId: null,
         successMessage: payload,
       };
-    case actionTypes.GET_ERROR :
+    case actionTypes.GET_ERROR:
       return {
         ...state,
         loading: false,

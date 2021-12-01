@@ -1,26 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { EditFilled } from "@ant-design/icons";
+import moment from "moment";
+
+import { get, remove } from "../../redux/modules/product";
+import { get as getCategories } from "../../redux/modules/category";
+
+import { stopPropagation } from "../../base/utils/event";
+
+import { useDidUpdateEffect } from "../../base/hooks";
+
+import Layout from "../../App/Layout";
 import {
-  EditFilled,
-} from '@ant-design/icons';
-import moment from 'moment';
-
-import { get, remove } from '../../redux/modules/product';
-import { get as getCategories } from '../../redux/modules/category';
-
-import { stopPropagation } from '../../base/utils/event';
-
-import { useDidUpdateEffect } from '../../base/hooks';
-
-import Layout from '../../App/Layout';
-import { Spin, Table, Pagination, Avatar, Tag, notification } from '../../base/components';
-import { ArrayHeader, DeleteItem } from '../../components';
+  Spin,
+  Table,
+  Pagination,
+  Avatar,
+  Tag,
+  notification,
+} from "../../base/components";
+import { ArrayHeader, DeleteItem } from "../../components";
 
 function ProductTable({ history, match }) {
-  const { user: { token } } = useSelector(state => state.auth);
-  const { dataArr: allCategories } = useSelector(state => state.category);
-  const { loading, removing, errorMessage, successMessage, dataArr, total } = useSelector(state => state.product);
+  const {
+    user: { token },
+  } = useSelector((state) => state.auth);
+  const { dataArr: allCategories } = useSelector((state) => state.category);
+  const { loading, removing, errorMessage, successMessage, dataArr, total } =
+    useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
@@ -28,66 +36,60 @@ function ProductTable({ history, match }) {
     current: 1,
     size: 10,
   });
-  const [search, setSearch] = useState('');
-  const [sorter, setSorter] = useState({ createdAt: 'desc' });
+  const [search, setSearch] = useState("");
+  const [sorter, setSorter] = useState({ createdAt: "desc" });
   const [filters, setFilters] = useState(null);
 
   const columns = [
     {
-      title: 'Image',
-      dataIndex: 'image',
-      key: 'image',
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
       render: (image) => {
-        return (
-          <Avatar
-            size="large"
-            src={'/' + image}
-          />
-        );
+        return <Avatar size="large" src={"/" + image} />;
       },
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       sorter: () => null,
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
       render: (price) => `$${price.toFixed(2)}`,
       sorter: () => null,
     },
     {
-      title: 'Categories',
-      dataIndex: 'categories',
-      key: 'categories',
+      title: "Categories",
+      dataIndex: "categories",
+      key: "categories",
       render: (productCategories) =>
-        productCategories.map(c => (
-            <Tag onClick={stopPropagation}>
-              <Link to={`categories/${c._id}`}>{c.title}</Link>
-            </Tag>
-          ),
-        ),
-      filters: allCategories?.map(c => ({text: c.title, value: c._id})),
+        productCategories.map((c) => (
+          <Tag onClick={stopPropagation}>
+            <Link to={`categories/${c._id}`}>{c.title}</Link>
+          </Tag>
+        )),
+      filters: allCategories?.map((c) => ({ text: c.title, value: c._id })),
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
       sorter: () => null,
     },
     {
-      title: 'Created',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (createdAt) => moment(createdAt).format('MM/DD/YYYY'),
+      title: "Created",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => moment(createdAt).format("MM/DD/YYYY"),
       sorter: () => null,
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <>
           <EditFilled className="mr-2" />
@@ -147,7 +149,7 @@ function ProductTable({ history, match }) {
       });
     } else {
       setSorter({
-        createdAt: 'desc',
+        createdAt: "desc",
       });
     }
 
@@ -156,8 +158,8 @@ function ProductTable({ history, match }) {
 
   const onRow = (record, index) => {
     return {
-      onClick: e => {
-        history.push(match.url + '/' + record._id);
+      onClick: (e) => {
+        history.push(match.url + "/" + record._id);
       },
     };
   };

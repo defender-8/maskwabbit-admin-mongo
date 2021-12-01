@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import './Layout.less';
+import "./Layout.less";
 
 function Layout({ children }) {
   return (
     <div className="AuthLayout">
-      <div className="AuthLayout-inner">
-        {children}
-      </div>
+      <div className="AuthLayout-inner">{children}</div>
     </div>
   );
 }

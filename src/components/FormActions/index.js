@@ -1,14 +1,18 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { Button, GoBackButton, Row, Col } from '../../base/components';
-import DeleteBtn from './DeleteBtn';
+import { Button, GoBackButton, Row, Col } from "../../base/components";
+import DeleteBtn from "./DeleteBtn";
 
-import './index.less';
+import "./index.less";
 
 function FormActions({ posAbsolute, deleteItem, isItemNew, saving, removing }) {
   return (
-    <div className={classNames('FormActions', { 'FormActions-p-abs': posAbsolute })}>
+    <div
+      className={classNames("FormActions", {
+        "FormActions-p-abs": posAbsolute,
+      })}
+    >
       <Row justify="space-between">
         <Col flex="100px">
           <GoBackButton />
@@ -22,10 +26,9 @@ function FormActions({ posAbsolute, deleteItem, isItemNew, saving, removing }) {
           >
             Save
           </Button>
-          {
-            !isItemNew ?
-              <DeleteBtn removing={removing} deleteItem={deleteItem} /> : null
-          }
+          {!isItemNew ? (
+            <DeleteBtn removing={removing} deleteItem={deleteItem} />
+          ) : null}
         </Col>
       </Row>
     </div>

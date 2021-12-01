@@ -1,7 +1,4 @@
-import useDidUpdateEffect from './useDidUpdateEffect';
-import useGoBack from './useGoBack';
+import useDidUpdateEffect from "./useDidUpdateEffect";
+import useGoBack from "./useGoBack";
 
-export {
-  useDidUpdateEffect,
-  useGoBack,
-};
+export { useDidUpdateEffect, useGoBack };

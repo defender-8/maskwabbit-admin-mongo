@@ -1,22 +1,25 @@
-import axios from 'axios';
-import qs from 'qs';
+import axios from "axios";
+import qs from "qs";
 
-import actionTypes from './action-types';
+import actionTypes from "./action-types";
 
 export const get = (token, queryParams) => {
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.RESET,
     });
 
     try {
-      const res = await axios.get(`/dashboard/clients/?${qs.stringify(queryParams)}`, config);
+      const res = await axios.get(
+        `/dashboard/clients/?${qs.stringify(queryParams)}`,
+        config
+      );
       const data = res.data;
 
       dispatch({
@@ -51,11 +54,11 @@ export const remove = (token, id, queryParams) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.REMOVING,
     });

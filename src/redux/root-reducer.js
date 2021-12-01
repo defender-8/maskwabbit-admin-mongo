@@ -1,18 +1,18 @@
-import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import authReducer from './auth/reducer';
-import adminReducer from './modules/admin';
-import clientReducer from './client/reducer';
-import productReducer from './modules/product';
-import categoryReducer from './modules/category';
-import orderReducer from './order/order-reducer';
+import authReducer from "./auth/reducer";
+import adminReducer from "./modules/admin";
+import clientReducer from "./client/reducer";
+import productReducer from "./modules/product";
+import categoryReducer from "./modules/category";
+import orderReducer from "./order/order-reducer";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['auth'],
+  whitelist: ["auth"],
 };
 
 const rootReducer = combineReducers({

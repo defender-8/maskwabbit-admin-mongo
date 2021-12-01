@@ -1,27 +1,25 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useRouteMatch } from 'react-router-dom';
-import {
-  ProfileOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useRouteMatch } from "react-router-dom";
+import { ProfileOutlined, LogoutOutlined } from "@ant-design/icons";
 
-import { logOut } from '../../../../../redux/auth/actions';
+import { logOut } from "../../../../../redux/auth/actions";
 
-import { Menu } from '../../../../../base/components';
+import { Menu } from "../../../../../base/components";
 
-import './index.less';
-
+import "./index.less";
 
 function UserMenu() {
   const { url } = useRouteMatch();
 
-  const { user } = useSelector(state => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
-  const profileLink = (user.role === 'super admin') ?
-    `/super-admins/${user._id}` : `/admins/${user._id}`;
+  const profileLink =
+    user.role === "super admin"
+      ? `/super-admins/${user._id}`
+      : `/admins/${user._id}`;
 
   const signOut = () => dispatch(logOut());
 
@@ -29,10 +27,7 @@ function UserMenu() {
     <Menu className="UserMenu" selectedKeys={[url]}>
       <Menu.Item>
         <ProfileOutlined />
-        <Link
-          to={profileLink}
-          className="d-inline-block"
-        >
+        <Link to={profileLink} className="d-inline-block">
           Profile
         </Link>
       </Menu.Item>

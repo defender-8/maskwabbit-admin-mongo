@@ -1,7 +1,7 @@
-import React from 'react';
-import AntTimePicker from 'antd/es/time-picker';
+import React from "react";
+import AntTimePicker from "antd/es/time-picker";
 
-function TimePicker({...props}) {
+function TimePicker({ ...props }) {
   return (
     <AntTimePicker
       allowClear={false}

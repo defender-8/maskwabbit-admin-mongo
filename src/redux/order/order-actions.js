@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-import orderActionTypes from './order-action-types';
+import orderActionTypes from "./order-action-types";
 
 // GET
 export const getArr = (endpoint, token) => {
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: orderActionTypes.RESET_ORDER_MESSAGE,
     });
@@ -46,10 +46,10 @@ export const getOne = (id, token) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: orderActionTypes.RESET_ORDER_MESSAGE,
     });
@@ -86,11 +86,11 @@ export const put = (id, formData, token) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: orderActionTypes.RESET_ORDER_MESSAGE,
     });
@@ -125,11 +125,11 @@ export const delOne = (id, token) => {
 
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
 
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: orderActionTypes.RESET_ORDER_MESSAGE_ONLY,
     });

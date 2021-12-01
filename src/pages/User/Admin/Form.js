@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { getById, post, put, remove } from '../../../redux/modules/admin';
+import { getById, post, put, remove } from "../../../redux/modules/admin";
 
-import { useDidUpdateEffect } from '../../../base/hooks';
+import { useDidUpdateEffect } from "../../../base/hooks";
 
-import Layout from '../../../App/Layout';
+import Layout from "../../../App/Layout";
 import {
   Spin,
   Empty,
@@ -15,16 +15,28 @@ import {
   Input,
   InputPassword,
   notification,
-} from '../../../base/components';
-import { FormActions } from '../../../components';
-import ChangePassModal from '../components/ChangePassModal';
+} from "../../../base/components";
+import { FormActions } from "../../../components";
+import ChangePassModal from "../components/ChangePassModal";
 
 function AdminForm({ match, history }) {
-  const { params: { id }, url } = match;
+  const {
+    params: { id },
+    url,
+  } = match;
 
-  const { user: { token } } = useSelector(state => state.auth);
-  const { loading, saving, removing, getError, errorMessage, successMessage, dataSingle } = useSelector(
-    state => state.admin);
+  const {
+    user: { token },
+  } = useSelector((state) => state.auth);
+  const {
+    loading,
+    saving,
+    removing,
+    getError,
+    errorMessage,
+    successMessage,
+    dataSingle,
+  } = useSelector((state) => state.admin);
 
   const dispatch = useDispatch();
 
@@ -73,7 +85,6 @@ function AdminForm({ match, history }) {
       await dispatch(post(token, values));
 
       form.resetFields();
-
     } else {
       await dispatch(put(token, id, values));
 
@@ -87,75 +98,66 @@ function AdminForm({ match, history }) {
   };
 
   return (
-    <Layout title={!id ? 'Add New User' : 'Edit User'}>
-      {
-        loading ?
-          <Spin /> : getError ?
-          <>
-            <GoBackButton />
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-          </> :
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-          >
-            <FormActions
-              deleteItem={deleteItem}
-              isItemNew={!id}
-              saving={saving}
-              removing={removing}
-            />
-            <div className="container-sm">
-              <FormItem
-                name="firstName"
-                label="First Name"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </FormItem>
-              <FormItem
-                name="lastName"
-                label="Last Name"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </FormItem>
-              <FormItem
-                name="email"
-                label="Email"
-                rules={[
-                  { required: true },
-                  { type: 'email' },
-                ]}
-              >
-                <Input />
-              </FormItem>
-              {
-                !id ?
-                  <>
-                    <FormItem
-                      name="password"
-                      label="Password"
-                      rules={[{ required: true }]}
-                    >
-                      <InputPassword />
-                    </FormItem>
-                    <FormItem
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      rules={[{ required: true }]}
-                    >
-                      <InputPassword />
-                    </FormItem>
-                  </> : null
-              }
-              {
-                id ? (<ChangePassModal userId={id} />) : null
-              }
-            </div>
-          </Form>
-      }
+    <Layout title={!id ? "Add New User" : "Edit User"}>
+      {loading ? (
+        <Spin />
+      ) : getError ? (
+        <>
+          <GoBackButton />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </>
+      ) : (
+        <Form form={form} layout="vertical" onFinish={onFinish}>
+          <FormActions
+            deleteItem={deleteItem}
+            isItemNew={!id}
+            saving={saving}
+            removing={removing}
+          />
+          <div className="container-sm">
+            <FormItem
+              name="firstName"
+              label="First Name"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </FormItem>
+            <FormItem
+              name="lastName"
+              label="Last Name"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </FormItem>
+            <FormItem
+              name="email"
+              label="Email"
+              rules={[{ required: true }, { type: "email" }]}
+            >
+              <Input />
+            </FormItem>
+            {!id ? (
+              <>
+                <FormItem
+                  name="password"
+                  label="Password"
+                  rules={[{ required: true }]}
+                >
+                  <InputPassword />
+                </FormItem>
+                <FormItem
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  rules={[{ required: true }]}
+                >
+                  <InputPassword />
+                </FormItem>
+              </>
+            ) : null}
+            {id ? <ChangePassModal userId={id} /> : null}
+          </div>
+        </Form>
+      )}
     </Layout>
   );
 }

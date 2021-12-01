@@ -1,3 +1,3 @@
-import Row from 'antd/es/row';
+import Row from "antd/es/row";
 
 export default Row;

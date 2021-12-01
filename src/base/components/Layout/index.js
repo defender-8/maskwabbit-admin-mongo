@@ -1,3 +1,3 @@
-import Layout from 'antd/es/layout';
+import Layout from "antd/es/layout";
 
 export default Layout;

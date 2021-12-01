@@ -1,8 +1,8 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 
-import Table from './Table';
-import Form from './Form';
+import Table from "./Table";
+import Form from "./Form";
 
 function ProductRouter() {
   return (

@@ -1,33 +1,33 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
-const selectOrderData = state => state.order;
+const selectOrderData = (state) => state.order;
 
 export const selectLoading = createSelector(
   [selectOrderData],
-  order => order.isLoading,
+  (order) => order.isLoading
 );
 
 export const selectOrders = createSelector(
   [selectOrderData],
-  order => order.orders,
+  (order) => order.orders
 );
 
 export const selectTotal = createSelector(
   [selectOrderData],
-  order => order.total,
+  (order) => order.total
 );
 
 export const selectOrder = createSelector(
   [selectOrderData],
-  order => order.order,
+  (order) => order.order
 );
 
 export const selectSuccessMessage = createSelector(
   [selectOrderData],
-  order => order.successMessage,
+  (order) => order.successMessage
 );
 
 export const selectErrorMessage = createSelector(
   [selectOrderData],
-  order => order.errorMessage,
+  (order) => order.errorMessage
 );
