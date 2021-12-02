@@ -6,16 +6,28 @@
   border: none;
 
   .ant-menu-item {
-    a {
-      &:hover {
-        color: @secondary;
-      }
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+
+    &:active {
+      background-color: unset;
     }
 
     &.ant-menu-item-selected {
       a {
         color: @secondary;
       }
+    }
+
+    a {
+      &:hover {
+        color: @secondary;
+      }
+    }
+
+    .UserMenu-title {
+      display: inline-block;
+      margin-left: 4px;
     }
   }
 

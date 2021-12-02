@@ -10,7 +10,7 @@ function AdminRouter() {
       <Route
         exact
         path="/admins"
-        render={(props) => <Table {...props} role="admin" />}
+        component={Table} />}
       />
       <Route exact path="/admins/new" component={Form} />
       <Route exact path="/admins/:id" component={Form} />

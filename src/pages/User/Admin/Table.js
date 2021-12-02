@@ -16,7 +16,7 @@ import {
 } from "../../../base/components";
 import { ArrayHeader, DeleteItem } from "../../../components";
 
-function AdminTable({ history, match, role }) {
+function AdminTable({ history, match }) {
   const {
     user: { token },
   } = useSelector((state) => state.auth);
@@ -32,6 +32,8 @@ function AdminTable({ history, match, role }) {
   const [search, setSearch] = useState("");
   const [sorter, setSorter] = useState({ createdAt: "desc" });
   const [filters, setFilters] = useState(null);
+
+  const role = (match.path === '/super-admins') ? 'super admin' : 'admin';
 
   const columns = [
     {

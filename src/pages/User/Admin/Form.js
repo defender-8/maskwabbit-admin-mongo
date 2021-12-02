@@ -28,6 +28,7 @@ function AdminForm({ match, history }) {
   const {
     user: { token },
   } = useSelector((state) => state.auth);
+
   const {
     loading,
     saving,
@@ -37,6 +38,8 @@ function AdminForm({ match, history }) {
     successMessage,
     dataSingle,
   } = useSelector((state) => state.admin);
+
+  const role = (match.path.includes('super-admins')) ? 'super admin' : 'admin';
 
   const dispatch = useDispatch();
 
@@ -81,6 +84,8 @@ function AdminForm({ match, history }) {
   }, [errorMessage, successMessage]);
 
   const onFinish = async (values) => {
+    values.role = role;
+
     if (!id) {
       await dispatch(post(token, values));
 

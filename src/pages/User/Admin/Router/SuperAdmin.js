@@ -10,7 +10,7 @@ function SuperAdminRouter() {
       <Route
         exact
         path="/super-admins"
-        render={(props) => <Table {...props} role="super admin" />}
+        component={Table} />}
       />
       <Route exact path="/super-admins/new" component={Form} />
       <Route exact path="/super-admins/:id" component={Form} />

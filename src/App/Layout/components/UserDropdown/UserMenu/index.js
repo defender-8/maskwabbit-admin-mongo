@@ -27,13 +27,13 @@ function UserMenu() {
     <Menu className="UserMenu" selectedKeys={[url]}>
       <Menu.Item>
         <ProfileOutlined />
-        <Link to={profileLink} className="d-inline-block">
+        <Link to={profileLink} className="UserMenu-title">
           Profile
         </Link>
       </Menu.Item>
       <Menu.Item className="color-danger" onClick={signOut}>
         <LogoutOutlined />
-        Logout
+        <div className="UserMenu-title">Logout</div>
       </Menu.Item>
     </Menu>
   );
