@@ -7,11 +7,7 @@ import Form from "../Form";
 function SuperAdminRouter() {
   return (
     <Switch>
-      <Route
-        exact
-        path="/super-admins"
-        component={Table} />}
-      />
+      <Route exact path="/super-admins" component={Table} />
       <Route exact path="/super-admins/new" component={Form} />
       <Route exact path="/super-admins/:id" component={Form} />
       <Redirect to="/super-admins" />

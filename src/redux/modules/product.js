@@ -1,11 +1,12 @@
-import Module, { actionTypes } from "../Module";
+import Module, { initialState, actionTypes } from "../Module";
 
-const product = new Module(
-  "product",
-  "/dashboard/products/",
+const product = new Module({
+  moduleName: "product",
+  commonRoute: "/dashboard/products/",
+  initialState,
   actionTypes,
-  true
-);
+  isMultipart: true,
+});
 
 export const { get, getById, post, put, remove } = product;
 

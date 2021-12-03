@@ -6,7 +6,7 @@ function notification(message) {
       antNotification.success({
         message: "Success!",
         description: message,
-        duration: 2,
+        duration: 1,
       });
     },
     error() {

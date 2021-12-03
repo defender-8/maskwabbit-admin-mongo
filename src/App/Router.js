@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import AuthRouter from "../pages/Auth/";
 import SuperAdminRouter from "../pages/User/Admin/Router/SuperAdmin";
 import AdminRouter from "../pages/User/Admin/Router/Admin";
-import ClientTable from "../pages/User/Client/Table";
+import ClientRouter from "../pages/User/Client";
 import ProductRouter from "../pages/Product";
 import CategoryRouter from "../pages/Category";
 // import OrderRouter from '../pages/Order/OrderRouter';
@@ -36,7 +36,7 @@ function Router() {
       />
       {protectedRoute(false, "/super-admins", SuperAdminRouter)}
       {protectedRoute(false, "/admins", AdminRouter)}
-      {protectedRoute(true, "/clients", ClientTable)}
+      {protectedRoute(false, "/clients", ClientRouter)}
       {protectedRoute(false, "/products", ProductRouter)}
       {protectedRoute(false, "/categories", CategoryRouter)}
       {/*{protectedRoute(false, '/orders', OrderRouter)}*/}

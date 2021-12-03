@@ -1,9 +1,15 @@
-import Module, { actionTypes, initialState } from "../Module";
+import Module, { initialState, actionTypes } from "../Module";
 import axios from "axios";
 
 class Admin extends Module {
-  constructor(moduleName, commonRoute, actionTypes) {
-    super(moduleName, commonRoute, actionTypes);
+  constructor({
+    moduleName,
+    commonRoute,
+    initialState,
+    actionTypes,
+    isMultipart,
+  }) {
+    super({ moduleName, commonRoute, initialState, actionTypes, isMultipart });
 
     this.changePassword = this.changePassword.bind(this);
   }
@@ -47,7 +53,7 @@ class Admin extends Module {
     };
   }
 
-  reducer(state = initialState, action) {
+  reducer(state = this.initialState, action) {
     const { type, payload } = action;
 
     if (type === this.actionTypes.CHANGE_PASSWORD) {
@@ -62,9 +68,14 @@ class Admin extends Module {
   }
 }
 
-const admin = new Admin("admin", "/dashboard/admins/", {
-  ...actionTypes,
-  CHANGE_PASSWORD: "ADMIN_CHANGE_PASSWORD",
+const admin = new Admin({
+  moduleName: "admin",
+  commonRoute: "/dashboard/admins/",
+  initialState,
+  actionTypes: {
+    ...actionTypes,
+    CHANGE_PASSWORD: "ADMIN_CHANGE_PASSWORD",
+  },
 });
 
 export const { get, getById, post, put, changePassword, remove } = admin;

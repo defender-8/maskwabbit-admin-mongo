@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { EditFilled } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import moment from "moment";
 
-import { get, remove } from "../../../redux/client/actions";
+import { get } from "../../../redux/modules/client";
 
 import { useDidUpdateEffect } from "../../../base/hooks";
 
@@ -14,13 +14,14 @@ import {
   Pagination,
   notification,
 } from "../../../base/components";
-import { ArrayHeader, DeleteItem } from "../../../components";
+import { ArrayHeader } from "../../../components";
 
 function ClientTable({ history, match, role }) {
   const {
     user: { token },
   } = useSelector((state) => state.auth);
-  const { loading, removing, errorMessage, successMessage, dataArr, total } =
+
+  const { loading, errorMessage, successMessage, dataArr, total } =
     useSelector((state) => state.client);
 
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function ClientTable({ history, match, role }) {
     current: 1,
     size: 10,
   });
+
   const [search, setSearch] = useState("");
   const [sorter, setSorter] = useState({ createdAt: "desc" });
   const [filters, setFilters] = useState(null);
@@ -64,8 +66,7 @@ function ClientTable({ history, match, role }) {
       key: "action",
       render: (text, record) => (
         <>
-          <EditFilled className="mr-2" />
-          <DeleteItem onDelete={onDelete} record={record} loading={removing} />
+          <EyeOutlined />
         </>
       ),
     },
@@ -86,10 +87,6 @@ function ClientTable({ history, match, role }) {
       notification(successMessage).success();
     }
   }, [errorMessage, successMessage]);
-
-  const onDelete = async (record) => {
-    await dispatch(remove(token, record._id, queryParams));
-  };
 
   const onPaginationChange = (current, size) => {
     setPage({

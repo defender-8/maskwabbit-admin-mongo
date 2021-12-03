@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import authReducer from "./auth/reducer";
 import adminReducer from "./modules/admin";
-import clientReducer from "./client/reducer";
+import clientReducer from "./modules/client";
 import productReducer from "./modules/product";
 import categoryReducer from "./modules/category";
 import orderReducer from "./order/order-reducer";

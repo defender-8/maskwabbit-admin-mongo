@@ -26,9 +26,16 @@ export const actionTypes = {
 };
 
 export default class Module {
-  constructor(moduleName, commonRoute, actionTypes, isMultipart) {
+  constructor({
+    moduleName,
+    commonRoute,
+    initialState,
+    actionTypes,
+    isMultipart = false,
+  }) {
     this.commonRoute = commonRoute;
     this.moduleName = moduleName;
+    this.initialState = initialState;
     this.actionTypes = this.getModuleActionTypes(actionTypes);
     this.isMultipart = isMultipart;
 
@@ -269,7 +276,7 @@ export default class Module {
     };
   }
 
-  reducer(state = initialState, action) {
+  reducer(state = this.initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
